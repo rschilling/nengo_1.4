@@ -13,3 +13,4 @@ simulator-ui/quick/*
 
 simulator-ui/python/timeview/layout.db.bak
 /simulator/nbproject/private/
+/simulator-ui/nbproject/private/
