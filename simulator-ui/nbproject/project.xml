@@ -3,7 +3,7 @@
     <type>org.netbeans.modules.ant.freeform</type>
     <configuration>
         <general-data xmlns="http://www.netbeans.org/ns/freeform-project/1">
-            <name>nengo-simulator</name>
+            <name>nengo-simulator-ui</name>
         </general-data>
         <general-data xmlns="http://www.netbeans.org/ns/freeform-project/2">
             <!-- Do not use Project Properties customizer when editing this file manually. 
@@ -12,11 +12,11 @@ auxiliary.show.customizer=false
 property there. Adding 
 auxiliary.show.customizer.message=<message>
  will show your customized message when someone attempts to open the customizer.  -->
-            <name>nengo-simulator</name>
+            <name>nengo-simulator-ui</name>
             <properties/>
             <folders>
                 <source-folder>
-                    <label>nengo-simulator</label>
+                    <label>nengo-simulator-ui</label>
                     <location>.</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
@@ -27,27 +27,15 @@ auxiliary.show.customizer.message=<message>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
-                    <label>src/java/test</label>
-                    <type>java</type>
-                    <location>src/java/test</location>
-                    <encoding>UTF-8</encoding>
-                </source-folder>
-                <source-folder>
-                    <label>src/c</label>
-                    <type>java</type>
-                    <location>src/c</location>
-                    <encoding>UTF-8</encoding>
-                </source-folder>
-                <source-folder>
                     <label>src/python</label>
                     <type>java</type>
                     <location>src/python</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
-                    <label>src/resources</label>
+                    <label>python</label>
                     <type>java</type>
-                    <location>src/resources</location>
+                    <location>python</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
             </folders>
@@ -62,7 +50,7 @@ auxiliary.show.customizer.message=<message>
                     <target>javadoc</target>
                 </action>
                 <action name="test">
-                    <target>test</target>
+                    <target>test-simulator</target>
                 </action>
                 <action name="rebuild">
                     <target>clean</target>
@@ -81,20 +69,12 @@ auxiliary.show.customizer.message=<message>
                         <location>src/java/main</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>src/java/test</label>
-                        <location>src/java/test</location>
-                    </source-folder>
-                    <source-folder style="packages">
-                        <label>src/c</label>
-                        <location>src/c</location>
-                    </source-folder>
-                    <source-folder style="packages">
                         <label>src/python</label>
                         <location>src/python</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>src/resources</label>
-                        <location>src/resources</location>
+                        <label>python</label>
+                        <location>python</location>
                     </source-folder>
                     <source-file>
                         <location>build.xml</location>
@@ -113,19 +93,9 @@ auxiliary.show.customizer.message=<message>
         <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/2">
             <compilation-unit>
                 <package-root>src/java/main</package-root>
-                <classpath mode="compile">lib/formsrt.jar:lib/Jama-1.0.2.jar:lib/jcommon-1.0.0.jar:lib/jfreechart-1.0.1.jar:lib/jgrapht-jdk1.5-0.7.3.jar:lib/jmatio.jar:lib/junit.jar:lib/log4j-1.2.16.jar:lib/qdox-1.6.3.jar:lib/ssj.jar</classpath>
+                <classpath mode="compile">lib/colt.jar:lib/commons-collections-3.2.jar:lib/itextpdf-5.3.4.jar:lib/jayatana-1.2.4.jar:lib/jbullet.jar:lib/jnumeric-0.1.jar:lib/jpct.jar:lib/jung-1.7.6.jar:lib/jython.jar:lib/macify-1.4.jar:lib/piccolo.jar:lib/piccolox.jar:lib/vecmath.jar:../simulator/src/java/main:../simulator/lib/log4j-1.2.16.jar:../simulator/lib/jfreechart-1.0.1.jar</classpath>
                 <built-to>bin</built-to>
-                <javadoc-built-to>artifacts/javadoc</javadoc-built-to>
-                <source-level>1.5</source-level>
-            </compilation-unit>
-            <compilation-unit>
-                <package-root>src/java/test</package-root>
-                <unit-tests/>
-                <classpath mode="compile">lib/formsrt.jar:lib/Jama-1.0.2.jar:lib/jcommon-1.0.0.jar:lib/jfreechart-1.0.1.jar:lib/jgrapht-jdk1.5-0.7.3.jar:lib/jmatio.jar:lib/junit.jar:lib/log4j-1.2.16.jar:lib/qdox-1.6.3.jar:lib/ssj.jar:src/java/main</classpath>
-                <source-level>1.5</source-level>
-            </compilation-unit>
-            <compilation-unit>
-                <package-root>src/c</package-root>
+                <javadoc-built-to>artifacts</javadoc-built-to>
                 <source-level>1.5</source-level>
             </compilation-unit>
             <compilation-unit>
@@ -133,7 +103,7 @@ auxiliary.show.customizer.message=<message>
                 <source-level>1.5</source-level>
             </compilation-unit>
             <compilation-unit>
-                <package-root>src/resources</package-root>
+                <package-root>python</package-root>
                 <source-level>1.5</source-level>
             </compilation-unit>
         </java-data>
