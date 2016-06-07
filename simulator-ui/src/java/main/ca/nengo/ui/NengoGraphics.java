@@ -111,6 +111,7 @@ import ca.nengo.ui.util.ProgressIndicator;
 import ca.nengo.ui.util.ScriptWorldWrapper;
 import ca.nengo.ui.world.NengoWorld;
 import ca.nengo.util.Environment;
+import java.net.URL;
 
 /**
  * Top level instance of the NeoGraphics application
@@ -198,7 +199,9 @@ public class NengoGraphics extends AppFrame implements NodeContainer {
 
         // Setup icon
         try {
-            Image image = ImageIO.read(getClass().getClassLoader().getResource("ca/nengo/ui/nengologo256.png"));
+            URL resource = getClass().getClassLoader().getResource("ca/nengo/ui/nengologo256.png");
+            System.out.println("Found resource " + resource.toString());
+            Image image = ImageIO.read(resource);
             setIconImage(image);
         } catch (IOException e) {
             e.printStackTrace();
