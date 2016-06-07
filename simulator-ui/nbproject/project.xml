@@ -56,6 +56,13 @@ auxiliary.show.customizer.message=<message>
                     <target>clean</target>
                     <target>build</target>
                 </action>
+                <action name="debug">
+                    <script>nbproject/ide-file-targets.xml</script>
+                    <target>debug-nb</target>
+                </action>
+                <action name="run">
+                    <target>run</target>
+                </action>
             </ide-actions>
             <export>
                 <type>folder</type>
@@ -85,7 +92,9 @@ auxiliary.show.customizer.message=<message>
                     <ide-action name="rebuild"/>
                     <ide-action name="clean"/>
                     <ide-action name="javadoc"/>
+                    <ide-action name="run"/>
                     <ide-action name="test"/>
+                    <ide-action name="debug"/>
                 </context-menu>
             </view>
             <subprojects/>
@@ -93,7 +102,7 @@ auxiliary.show.customizer.message=<message>
         <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/2">
             <compilation-unit>
                 <package-root>src/java/main</package-root>
-                <classpath mode="compile">lib/colt.jar:lib/commons-collections-3.2.jar:lib/itextpdf-5.3.4.jar:lib/jayatana-1.2.4.jar:lib/jbullet.jar:lib/jnumeric-0.1.jar:lib/jpct.jar:lib/jung-1.7.6.jar:lib/jython.jar:lib/macify-1.4.jar:lib/piccolo.jar:lib/piccolox.jar:lib/vecmath.jar:../simulator/src/java/main:../simulator/lib/log4j-1.2.16.jar:../simulator/lib/jfreechart-1.0.1.jar</classpath>
+                <classpath mode="compile">lib/colt.jar:lib/commons-collections-3.2.jar:lib/itextpdf-5.3.4.jar:lib/jayatana-1.2.4.jar:lib/jbullet.jar:lib/jnumeric-0.1.jar:lib/jpct.jar:lib/jung-1.7.6.jar:lib/jython.jar:lib/macify-1.4.jar:lib/piccolo.jar:lib/piccolox.jar:lib/vecmath.jar:../simulator/lib/log4j-1.2.16.jar:../simulator/lib/jfreechart-1.0.1.jar:../simulator/src/java/main</classpath>
                 <built-to>bin</built-to>
                 <javadoc-built-to>artifacts</javadoc-built-to>
                 <source-level>1.5</source-level>

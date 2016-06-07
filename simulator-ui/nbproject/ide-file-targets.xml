@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir=".." name="nengo-simulator-ui-IDE">
+    <property environment="env"/>
+    <property name="dir.simulator" value="../simulator"/>
+	<property file="${dir.simulator}/build.properties"/>
+	<path id="classpath.simulator">
+        <pathelement location="${dir.simulator}/${dest.build}"/>
+    	<fileset dir="${dir.simulator}/${src.lib}">
+    		<include name="*.jar"/>
+    	</fileset>
+	</path>
+    <path id="classpath.simulator-ui">
+    	<path refid="classpath.simulator"/>
+    	<pathelement location="${dest.build}"/>
+    	<fileset dir="${src.lib}">
+    		<include name="*.jar"/>
+    	</fileset>
+    </path>
+    <!-- TODO: edit the following target according to your needs -->
+    <!-- (more info: http://www.netbeans.org/kb/articles/freeform-config.html#debugj2se) -->
+    <target name="debug-nb">
+        <path id="cp">
+            <path refid="classpath.simulator"/>
+            <pathelement location="${dest.build}"/>
+            <fileset dir="${src.lib}">
+    		<include name="*.jar"/>
+            </fileset>
+        </path>
+        <nbjpdastart addressproperty="jpda.address" name="nengo-simulator-ui" transport="dt_socket">
+            <classpath refid="cp"/>
+        </nbjpdastart>
+        <!-- TODO configure the main class for your project here: -->
+        <java classname="ca.nengo.ui.NengoLauncher" fork="true">
+            <classpath refid="cp"/>
+            <jvmarg value="-Xdebug"/>
+            <jvmarg value="-Xrunjdwp:transport=dt_socket,address=${jpda.address}"/>
+        </java>
+    </target>
+</project>
