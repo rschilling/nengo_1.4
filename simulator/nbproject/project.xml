@@ -68,6 +68,10 @@ auxiliary.show.customizer.message=<message>
                     <target>clean</target>
                     <target>build</target>
                 </action>
+                <action name="debug">
+                    <script>nbproject/ide-file-targets.xml</script>
+                    <target>debug-nb</target>
+                </action>
             </ide-actions>
             <export>
                 <type>folder</type>
@@ -106,6 +110,7 @@ auxiliary.show.customizer.message=<message>
                     <ide-action name="clean"/>
                     <ide-action name="javadoc"/>
                     <ide-action name="test"/>
+                    <ide-action name="debug"/>
                 </context-menu>
             </view>
             <subprojects/>
