@@ -27,12 +27,6 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.config.handlers;
 
-import java.awt.Component;
-
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-
-import ca.nengo.config.ui.ConfigurationChangeListener;
 import ca.nengo.model.Units;
 
 /**
@@ -66,23 +60,6 @@ public class UnitsHandler extends BaseHandler {
 	 */
 	public UnitsHandler() {
 		super(Units.class);
-	}
-
-	@Override
-	public Component getEditor(Object o, ConfigurationChangeListener listener, JComponent parent) {
-		Units unit = (Units) o;
-
-		final JComboBox result = new JComboBox(myList);
-		result.setSelectedItem(unit);
-
-		listener.setProxy(new ConfigurationChangeListener.EditorProxy() {
-            public Object getValue() {
-				return result.getSelectedItem();
-			}
-		});
-		result.addActionListener(listener);
-
-		return result;
 	}
 
 	@Override

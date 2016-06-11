@@ -27,9 +27,6 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.config.handlers;
 
-
-import ca.nengo.config.ui.ConfigurationChangeListener;
-
 /**
  * ConfigurationHandler for Boolean values.
  *

@@ -35,8 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.apache.log4j.Logger;
-
 import ca.nengo.util.ClassUtils;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -54,7 +52,6 @@ import com.thoughtworks.qdox.model.JavaParameter;
  */
 public class JavaSourceParser {
 
-	private static Logger ourLogger = Logger.getLogger(JavaSourceParser.class);
 	private static JavaDocBuilder ourBuilder;
 
 	static {
@@ -70,7 +67,6 @@ public class JavaSourceParser {
 	 */
 	public static void addSource(File baseDir) {
 		ourBuilder.addSourceTree(baseDir);
-		ourLogger.debug("Adding source tree: " + baseDir.getAbsolutePath());
 	}
 
 	/**
@@ -172,7 +168,7 @@ public class JavaSourceParser {
 		try {
 			result = ClassUtils.forName(name);
 		} catch (ClassNotFoundException e) {
-			ourLogger.warn("JavaSourceParser.getType(...) can't find type " + name);
+			throw new RuntimeException("JavaSourceParser.getType(...) can't find type " + name, e);
 		}
 		return result;
 	}
@@ -228,7 +224,7 @@ public class JavaSourceParser {
 					String referencedDocs = getDocs(referencedMethod);
 					result.append("\r\n" + referencedDocs + "\r\n");
 				} catch (Exception e) {
-					ourLogger.warn("Can't get docs for reference " + tag.getValue(), e);
+					throw new RuntimeException("Can't get docs for reference " + tag.getValue(), e);
 				}
 			} else {
 				result.append("<p>");

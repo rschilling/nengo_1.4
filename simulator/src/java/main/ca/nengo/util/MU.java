@@ -29,8 +29,6 @@ package ca.nengo.util;
 
 import java.text.NumberFormat;
 
-import org.apache.log4j.Logger;
-
 import ca.nengo.math.PDF;
 
 /**
@@ -41,8 +39,6 @@ import ca.nengo.math.PDF;
  * @author Bryan Tripp
  */
 public class MU {
-	
-	private static Logger ourLogger = Logger.getLogger(MU.class);
 
 	/**
 	 * @param matrix An array of arrays that is expected to be in matrix form
@@ -501,10 +497,7 @@ public class MU {
 		
 		int fromRow = 0;
 		int fromCol = -1;
-		
-		ourLogger.debug(matrix.length + " rows");
-		ourLogger.debug(matrix[0].length + " cols");
-		
+
 		for (int i = 0; i < rows; i++) {
 			result[i] = new float[cols];
 			

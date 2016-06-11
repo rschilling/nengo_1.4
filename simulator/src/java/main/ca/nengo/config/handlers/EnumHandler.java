@@ -31,8 +31,6 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-import ca.nengo.config.ui.ConfigurationChangeListener;
-
 /**
  * ConfigurationHandler for SimulationMode values.
  *

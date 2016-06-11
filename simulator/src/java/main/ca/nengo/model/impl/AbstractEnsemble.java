@@ -29,14 +29,14 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.model.impl;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
-import org.apache.log4j.Logger;
 
 import ca.nengo.model.Ensemble;
 import ca.nengo.model.InstantaneousOutput;
@@ -65,9 +65,8 @@ import ca.nengo.util.impl.TimeSeriesImpl;
  */
 public abstract class AbstractEnsemble implements Ensemble, Probeable, VisiblyMutable {
 
+	public static final String TAG = "Ensemble";
 	private static final long serialVersionUID = -5498397418584843304L;
-
-	private static Logger ourLogger = Logger.getLogger(AbstractEnsemble.class);
 
 	private String myName;
 	private Map<String, List<Integer>> myStateNames; // for Probeable
@@ -220,7 +219,7 @@ public abstract class AbstractEnsemble implements Ensemble, Probeable, VisiblyMu
 						mySpikePattern.addSpike(i, endTime);
 					}
 				} catch (StructuralException e) {
-					ourLogger.warn("Ensemble has been set to collect spikes, but not all components have Origin Neuron.AXON", e);
+					throw new RuntimeException("Ensemble has been set to collect spikes, but not all components have Origin Neuron.AXON", e);
 				}
 			}
 		}
@@ -345,7 +344,7 @@ public abstract class AbstractEnsemble implements Ensemble, Probeable, VisiblyMu
 	 */
     public SpikePattern getSpikePattern() {
 		if (!myCollectSpikesFlag) {
-            ourLogger.warn("Warning: collect spikes flag is off");
+           Log.w(TAG, "Warning: collect spikes flag is off");
         }
 		return mySpikePattern;
 	}

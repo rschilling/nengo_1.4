@@ -28,10 +28,10 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.math.impl;
 
+import android.util.Log;
+
 import java.io.FileNotFoundException;
 import java.util.Random;
-
-import org.apache.log4j.Logger;
 
 import Jama.Matrix;
 import Jama.SingularValueDecomposition;
@@ -53,7 +53,6 @@ import ca.nengo.util.Memory;
  */
 public class WeightedCostApproximator implements LinearApproximator {
 
-	private static Logger ourLogger = Logger.getLogger(WeightedCostApproximator.class);
 	private static final long serialVersionUID = 1L;
 
 	private float[][] myEvalPoints;
@@ -505,7 +504,7 @@ public class WeightedCostApproximator implements LinearApproximator {
             }
 
 			if(!myQuiet) {
-                ourLogger.info("Using " + i + " singular values for pseudo-inverse");
+                Log.i("Approximator", "Using " + i + " singular values for pseudo-inverse");
             }
 
 			for (int j = i; j < matrix.length; j++) {

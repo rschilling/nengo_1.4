@@ -31,7 +31,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import ca.nengo.config.ConfigurationHandler;
 import ca.nengo.config.IconRegistry;
-import ca.nengo.config.ui.ConfigurationChangeListener;
 
 /**
  * Base class that provides default behaviour for ConfigurationHandlers.

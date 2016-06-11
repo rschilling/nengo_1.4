@@ -33,8 +33,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
-import org.apache.log4j.Logger;
-
 import ca.nengo.math.Function;
 
 /**
@@ -57,7 +55,6 @@ import ca.nengo.math.Function;
 public class PostfixFunction implements Function {
 
 	private static final long serialVersionUID = 1L;
-	private static Logger ourLogger = Logger.getLogger(PostfixFunction.class);
 
 	private List<Serializable> myExpressionList;
 
@@ -96,7 +93,6 @@ public class PostfixFunction implements Function {
 		int highest = findHighestDimension(expressionList);
 		if (dimension <= highest) {
 			dimension = highest+1;
-			ourLogger.warn("Dimension adjusted to " + (highest+1) + " to satisfy expression " + expression);
 		}
 
 		myDimension = dimension;

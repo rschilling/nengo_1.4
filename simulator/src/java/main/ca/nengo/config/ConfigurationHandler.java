@@ -31,7 +31,6 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.config;
 
-import ca.nengo.config.ui.ConfigurationChangeListener;
 
 /**
  * <p>Manages configuration of <code>Property</code>s of of a certain Class.
