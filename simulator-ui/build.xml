@@ -45,6 +45,15 @@
 	    <ant dir="${dir.simulator}" inheritAll="false" target="javadoc" />
 	</target>
 	
+        
+    <target description="Runs the application"
+			depends="init,build-simulator" name="run">
+        <java classname="ca.nengo.ui.NengoLauncher" fork="true">
+            <classpath refid="classpath.simulator-ui"/>
+            
+        </java>
+        
+    </target>
     <target description="Build simulator-ui. Produces .class files in the ${dest.build} directory."
 			depends="init,build-simulator" name="build">
         <javac debug="true" debuglevel="${java.debuglevel}" destdir="${dest.build}" source="${java.source}" target="${java.target}">
@@ -85,18 +94,27 @@
     	<exec executable="git" spawn="false" dir="${basedir}" outputproperty="buildhash">
     	    <arg line="rev-parse --short HEAD"/>
     	</exec>
+                <!-- set the property for the distribution directory, dist.dir -->
 		<property name="dist.dir" value="../nengo-${buildhash}"/>
+                
+                <!-- copy output files from the simulator project's output
+                    directory to this project's output directory. -->
 		<copy includeemptydirs="false" todir="${dest.build}">
 	        <fileset dir="${dir.simulator}/${dest.build}">
 	            <exclude name="**/*.launch"/>
 	            <exclude name="**/*.java"/>
 	        </fileset>
 	    </copy>
+            
+                <!-- delete the distribution directory and re-create it. -->
 		<delete includeEmptyDirs="true" removeNotFollowedSymlinks="true" quiet="true">
 		    <fileset dir="${dist.dir}" erroronmissingdir="false"
 		    	followsymlinks="false" defaultexcludes="false" />
 	    </delete>
+                
 		<mkdir dir="${dist.dir}"/>
+                
+                <!-- create a jar file from the output directory -->
 		<jar destfile="${dist.dir}/nengo-${buildhash}.jar" basedir="${dest.build}">
 	    	<manifest>
 		    	<attribute name="Main-Class" value="ca.nengo.ui.NengoLauncher" />
@@ -115,7 +133,7 @@
 		<copy includeemptydirs="false" todir="${dist.dir}/api/src">
 			<fileset dir="${dir.simulator}/${src.main}"/>
 		</copy>
-		<copy includeemptydirs="false" todir="${dist.dir}">
+		<copy verbose="true" includeemptydirs="false" todir="${dist.dir}">
 			<fileset dir=".">
 				<include name="external/**"/>
 				<include name="images/**"/>

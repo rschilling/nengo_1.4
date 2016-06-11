@@ -12,3 +12,9 @@ simulator-ui/commandhistory.dat
 simulator-ui/quick/*
 
 simulator-ui/python/timeview/layout.db.bak
+/simulator/nbproject/private/
+/simulator-ui/nbproject/private/
+/simulator/build/
+/simulator/dist/
+/simulator-ui/build/
+/simulator-ui/dist/
