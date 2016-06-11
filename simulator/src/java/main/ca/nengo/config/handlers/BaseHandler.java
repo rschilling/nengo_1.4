@@ -27,17 +27,7 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.config.handlers;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.lang.reflect.InvocationTargetException;
-
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 import ca.nengo.config.ConfigurationHandler;
 import ca.nengo.config.IconRegistry;
@@ -81,48 +71,6 @@ public abstract class BaseHandler implements ConfigurationHandler {
             }
 			throw new RuntimeException(t);
 		}
-	}
-
-	/**
-	 * Returns a JTextField. An object is built from the text using fromString().
-	 *
-	 * @see ca.nengo.config.ConfigurationHandler#getEditor(java.lang.Object, ConfigurationChangeListener, JComponent)
-	 */
-	public Component getEditor(Object o, final ConfigurationChangeListener listener, JComponent parent) {
-		final JTextField result = new JTextField(toString(o));
-		if (result.getPreferredSize().width < 20) {
-            result.setPreferredSize(new Dimension(20, result.getPreferredSize().height));
-        }
-
-		// Commit changes when focus is lost
-		//
-		result.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
-				listener.commitChanges();
-			}
-
-			public void focusGained(FocusEvent e) {
-			}
-		});
-
-		listener.setProxy(new ConfigurationChangeListener.EditorProxy() {
-			public Object getValue() {
-				return fromString(result.getText());
-			}
-		});
-		result.addActionListener(listener);
-
-		return result;
-	}
-
-	/**
-	 * @return null
-	 * @see ca.nengo.config.ConfigurationHandler#getRenderer(java.lang.Object)
-	 */
-	public Component getRenderer(Object o) {
-		JLabel result = new JLabel(toString(o), IconRegistry.getInstance().getIcon(o), SwingConstants.LEFT);
-		result.setFont(result.getFont().deriveFont(Font.PLAIN));
-		return result;
 	}
 
 	/**

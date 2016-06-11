@@ -31,10 +31,6 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.config;
 
-import java.awt.Component;
-
-import javax.swing.JComponent;
-
 import ca.nengo.config.ui.ConfigurationChangeListener;
 
 /**
@@ -57,27 +53,6 @@ public interface ConfigurationHandler {
 	 * @return True if this handler can handle values of the given class
 	 */
 	public boolean canHandle(Class<?> c);
-
-	/**
-	 * @param o An object for which canHandle(o.getClass()) == true
-	 * @return A UI component (eg JLabel) that shows the object's value.
-	 * 		If null, the calling property editor will attempt to create
-	 * 		a default display, possibly using toString(o).
-	 */
-	public Component getRenderer(Object o);
-
-	/**
-	 * @param o An object for which canHandle(o.getClass()) == true
-	 * @param listener An ActionListener. The returned editor component must 1) add this listener
-	 * 		to the part of itself that produces an event when editing is complete, and 2) call
-	 * 		setProxy() with an EditorProxy through which the listener can retrieve a
-	 * 		new object value when editing is complete
-	 * @param parent Parent component
-	 * @return A UI component (eg JTextField) that allows the user to change the
-	 * 		object's value. If null, the calling property editor will attempt
-	 * 		to create a default editor, possibly using fromString(...).
-	 */
-	public Component getEditor(Object o, ConfigurationChangeListener listener, JComponent parent);
 
 	/**
 	 * @param o An object for which canHandle(o.getClass()) == true

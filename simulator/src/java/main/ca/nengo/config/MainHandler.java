@@ -28,18 +28,14 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.config;
 
-import java.awt.Component;
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-
-import org.apache.log4j.Logger;
 
 import ca.nengo.config.handlers.BooleanHandler;
 import ca.nengo.config.handlers.EnumHandler;
@@ -63,12 +59,13 @@ import ca.nengo.model.neuron.impl.IzhikevichSpikeGenerator;
  */
 public final class MainHandler implements ConfigurationHandler {
 
+	public static final String TAG = "Config";
+
 	/**
 	 * Java package with handlers
 	 */
 	public static String HANDLERS_FILE_PROPERTY = "ca.nengo.config.handlers";
 
-	private static Logger ourLogger = Logger.getLogger(ConfigurationHandler.class);
 	private static MainHandler ourInstance;
 
 	private List<ConfigurationHandler> myHandlers;
@@ -92,12 +89,12 @@ public final class MainHandler implements ConfigurationHandler {
 			try {
 				loadHandlers(file);
 			} catch (IOException e) {
-				String message = "Can't load handlers";
-				ourLogger.error(message, e);
-				throw new RuntimeException(message, e);
+				throw new RuntimeException("Can't load handlers", e);
 			}
 		} else {
-			ourLogger.warn("Can't open configuration handlers file " + fileName);
+            if (Log.isLoggable(TAG, Log.WARN)) {
+                Log.w(TAG, "Can't open configuration handlers file " + fileName);
+            }
 		}
 
 		addHandler(new FloatHandler());
@@ -123,7 +120,6 @@ public final class MainHandler implements ConfigurationHandler {
 				addHandler(h);
 			} catch (Exception e) {
 				String message = "Can't create handler";
-				ourLogger.error(message, e);
 				throw new RuntimeException(message, e);
 			}
 		}
@@ -170,40 +166,6 @@ public final class MainHandler implements ConfigurationHandler {
 	 */
 	public Object fromString(String s) {
 		return null;
-	}
-
-	/**
-	 * @see ca.nengo.config.ConfigurationHandler#getEditor(Object, ConfigurationChangeListener, JComponent)
-	 */
-	public Component getEditor(Object o, ConfigurationChangeListener listener, JComponent parent) {
-		Component result = null;
-
-		Class<?> c = o.getClass();
-		ConfigurationHandler handler = getHandler(myHandlers, c);
-		if (handler != null) {
-            result = handler.getEditor(o, listener, parent);
-        }
-
-		return result;
-	}
-
-	/**
-	 * @see ca.nengo.config.ConfigurationHandler#getRenderer(java.lang.Object)
-	 */
-	public Component getRenderer(Object o) {
-		Component result = null;
-
-		if (o instanceof NullValue) {
-            result = new JLabel("EMPTY");
-        }
-
-		Class<?> c = o.getClass();
-		ConfigurationHandler handler = getHandler(myHandlers, c);
-		if (handler != null) {
-            result = handler.getRenderer(o);
-        }
-
-		return result;
 	}
 
 	/**

@@ -27,13 +27,9 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.config.handlers;
 
-import java.awt.Component;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
-
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
 
 import ca.nengo.config.ui.ConfigurationChangeListener;
 
@@ -60,24 +56,6 @@ public class EnumHandler extends BaseHandler {
 	public EnumHandler(Class<?> type, Enum<?> defaultValue) {
 		super(type);
 		myDefaultValue = defaultValue;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public Component getEditor(Object o, ConfigurationChangeListener listener, JComponent parent) {
-		Enum<?> mode = (Enum<?>) o;
-		List<? extends Enum<?>> all = new ArrayList<Enum<?>>(EnumSet.allOf(mode.getClass()));
-		final JComboBox result = new JComboBox(all.toArray());
-		result.setSelectedItem(mode);
-
-		listener.setProxy(new ConfigurationChangeListener.EditorProxy() {
-			public Object getValue() {
-				return result.getSelectedItem();
-			}
-		});
-		result.addActionListener(listener);
-
-		return result;
 	}
 
 	@Override

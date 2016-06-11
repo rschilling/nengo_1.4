@@ -27,14 +27,8 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.config.handlers;
 
-//import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.FlowLayout;
 import java.util.StringTokenizer;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 import ca.nengo.config.IconRegistry;
 import ca.nengo.config.ui.ConfigurationChangeListener;
@@ -85,18 +79,6 @@ public class MatrixHandler extends MatrixHandlerBase {
 			});
 		}
 		return matrixEditor;
-	}
-
-	@Override
-	public Component getRenderer(Object o) {
-		JPanel result = new JPanel(new FlowLayout());
-
-		float[][] matrix = (float[][]) o;
-		String text = toString(matrix, '\t', "\r\n");
-		result.add(new JLabel(IconRegistry.getInstance().getIcon(o)));
-		result.add(new JTextArea(text));
-
-		return result;
 	}
 
 	@Override
