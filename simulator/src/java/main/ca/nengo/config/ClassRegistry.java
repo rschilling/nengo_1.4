@@ -27,6 +27,8 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.config;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,8 +40,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 /**
  * A registry of implementations of selected types of interest (subclasses and
  * interface implementations). This gets used when generating the list of 
@@ -48,10 +48,12 @@ import org.apache.log4j.Logger;
  * TODO: unit tests
  *
  * @author Bryan Tripp
+ * @author Richard Schilling (coderroadie@gmail.com)
  */
 public final class ClassRegistry {
 
-	private static Logger ourLogger = Logger.getLogger(ClassRegistry.class);
+    public static final String TAG = "ClassRegistry";
+
 	private static ClassRegistry ourInstance;
 
 	/**
@@ -85,7 +87,9 @@ public final class ClassRegistry {
 				Class<?> type = Class.forName(type2);
 				addRegisterableType(type);
 			} catch (ClassNotFoundException e) {
-				ourLogger.warn("Can't add type " + type2, e);
+				if (Log.isLoggable(TAG, Log.WARN)){
+                    Log.w(TAG, "Can't add type " + type2, e);
+                }
 			}
 		}
 
@@ -94,7 +98,9 @@ public final class ClassRegistry {
 			try {
 				register(impl);
 			} catch (ClassNotFoundException e) {
-				ourLogger.warn("Can't register implementation " + impl, e);
+                if (Log.isLoggable(TAG, Log.WARN)) {
+                    Log.w(TAG, "Can't register implementation " + impl, e);
+                }
 			}
 		}
 
@@ -117,7 +123,9 @@ public final class ClassRegistry {
                 }
 			}
 		} catch (IOException e) {
-			ourLogger.warn("Can't load list from " + resource, e);
+            if (Log.isLoggable(TAG, Log.WARN)) {
+                Log.w(TAG, "Can't load list from " + resource, e);
+            }
 		}
 
 		return result.toArray(new String[0]);

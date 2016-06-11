@@ -1,9 +1,9 @@
 package cognition.com.nengo;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 
-public class NengoActivity extends AppCompatActivity {
+public class NengoActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
