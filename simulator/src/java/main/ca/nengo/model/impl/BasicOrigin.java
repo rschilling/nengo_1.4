@@ -27,12 +27,6 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.model.impl;
 
-import ca.nengo.config.ConfigUtil;
-import ca.nengo.config.Configurable;
-import ca.nengo.config.Configuration;
-import ca.nengo.config.Property;
-import ca.nengo.config.impl.ConfigurationImpl;
-import ca.nengo.config.impl.SingleValuedPropertyImpl;
 import ca.nengo.model.Ensemble;
 import ca.nengo.model.InstantaneousOutput;
 import ca.nengo.model.Node;
@@ -48,7 +42,7 @@ import ca.nengo.model.Units;
  *
  * @author Bryan Tripp
  */
-public class BasicOrigin implements Origin, Noise.Noisy, Resettable, Configurable {
+public class BasicOrigin implements Origin, Noise.Noisy, Resettable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -59,7 +53,6 @@ public class BasicOrigin implements Origin, Noise.Noisy, Resettable, Configurabl
 	private InstantaneousOutput myValues;
 	private Noise myNoise;
 	private Noise[] myNoises; //per output
-	private transient ConfigurationImpl myConfiguration;
 	private boolean myRequiredOnCPU;
 
 	/**
@@ -81,29 +74,7 @@ public class BasicOrigin implements Origin, Noise.Noisy, Resettable, Configurabl
 		myDimension = dimension;
 		myUnits = units;
 		myValues = new RealOutputImpl(new float[dimension], units, 0);
-	}
-
-	private void initConfiguration() {
-		myConfiguration = ConfigUtil.defaultConfiguration(this);
-		myConfiguration.removeProperty("dimensions");
-		try {
-			Property p = new SingleValuedPropertyImpl(myConfiguration, "dimensions", Integer.TYPE,
-					this.getClass().getMethod("getDimensions", new Class[0]));
-			myConfiguration.defineProperty(p);
-		} catch (NoSuchMethodException nsme){
-			throw new RuntimeException(nsme);
-		}
-	}
-
-	/**
-	 * @see ca.nengo.config.Configurable#getConfiguration()
-	 */
-	public Configuration getConfiguration() {
-		if (myConfiguration == null) {
-			initConfiguration();
-		}
-		return myConfiguration;
-	}
+        }
 
 	/**
 	 * This method is normally called by the Node that contains this Origin, to set the input that is

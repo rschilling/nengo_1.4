@@ -34,10 +34,6 @@ package ca.nengo.math.impl;
 
 import java.util.Arrays;
 
-import ca.nengo.config.ConfigUtil;
-import ca.nengo.config.Configuration;
-import ca.nengo.config.impl.ConfigurationImpl;
-import ca.nengo.config.impl.SingleValuedPropertyImpl;
 import ca.nengo.math.Function;
 
 /**
@@ -84,15 +80,6 @@ public class PiecewiseConstantFunction extends AbstractFunction {
 
 		setValues(values);
 		
-	}
-
-	/**
-	 * @return Custom configuration
-	 */
-	public Configuration getConfiguration() {
-		ConfigurationImpl result = ConfigUtil.defaultConfiguration(this);
-		result.defineProperty(SingleValuedPropertyImpl.getSingleValuedProperty(result, "numDiscontinuities", Integer.TYPE));
-		return result;
 	}
 
 	/**

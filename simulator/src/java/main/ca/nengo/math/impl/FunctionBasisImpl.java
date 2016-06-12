@@ -29,10 +29,6 @@ package ca.nengo.math.impl;
 
 import java.lang.reflect.Method;
 
-import ca.nengo.config.ConfigUtil;
-import ca.nengo.config.Configuration;
-import ca.nengo.config.impl.ConfigurationImpl;
-import ca.nengo.config.impl.ListPropertyImpl;
 import ca.nengo.math.Function;
 import ca.nengo.math.FunctionBasis;
 
@@ -64,22 +60,6 @@ public class FunctionBasisImpl extends AbstractFunction implements FunctionBasis
 		myCoefficients = new float[functions.length];
 	}
 	
-	/**
-	 * @return Custom configuration 
-	 */
-	public Configuration getConfiguration() {
-		ConfigurationImpl result = ConfigUtil.defaultConfiguration(this);
-		result.removeProperty("basisDimension");
-		try {
-			Method getter = this.getClass().getMethod("getFunction", new Class[]{Integer.TYPE});
-			Method countGetter = this.getClass().getMethod("getBasisDimension", new Class[0]);
-			result.defineProperty(new ListPropertyImpl(result, "functions", Function.class, getter, countGetter));			
-		} catch (Exception e) {
-			throw new RuntimeException("Can't find function-related methods (this is a bug)", e);
-		}
-		return result;
-	}
-
 	/**
 	 * @see ca.nengo.math.FunctionBasis#getBasisDimension()
 	 */

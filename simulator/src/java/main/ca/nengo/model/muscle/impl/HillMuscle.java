@@ -30,7 +30,6 @@ a recipient may use your version of this file under either the MPL or the GPL Li
 package ca.nengo.model.muscle.impl;
 
 import android.util.Log;
-import ca.nengo.config.Configuration;
 import ca.nengo.dynamics.DynamicalSystem;
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.dynamics.impl.EulerIntegrator;
@@ -191,14 +190,6 @@ public class HillMuscle extends SkeletalMuscleImpl {
 			myUnits = new Units[]{torque ? Units.Nm : Units.N};
 
 			myRootFinder = new NewtonRootFinder(20, true);
-		}
-
-
-		/**
-		 * @return Configuration
-		 */
-		public Configuration getConfiguration() {
-			return null;
 		}
 
 		/**

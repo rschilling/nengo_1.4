@@ -27,10 +27,6 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.model.nef.impl;
 
-import ca.nengo.config.ConfigUtil;
-import ca.nengo.config.Configurable;
-import ca.nengo.config.Configuration;
-import ca.nengo.config.impl.ConfigurationImpl;
 import ca.nengo.dynamics.DynamicalSystem;
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.dynamics.impl.EulerIntegrator;
@@ -69,7 +65,7 @@ import ca.nengo.util.impl.TimeSeriesImpl;
  *
  * @author Bryan Tripp
  */
-public class DecodedOrigin implements Origin, Resettable, SimulationMode.ModeConfigurable, Noise.Noisy, Configurable, ShortTermPlastic {
+public class DecodedOrigin implements Origin, Resettable, SimulationMode.ModeConfigurable, Noise.Noisy, ShortTermPlastic {
 
 	private static final long serialVersionUID = 1L;
 
@@ -212,15 +208,6 @@ public class DecodedOrigin implements Origin, Resettable, SimulationMode.ModeCon
 		myExpressModel = em;
 	}
 	
-	/**
-	 * @see ca.nengo.config.Configurable#getConfiguration()
-	 */
-	public Configuration getConfiguration() {
-		ConfigurationImpl result = ConfigUtil.defaultConfiguration(this);
-		//result.renameProperty("sTPDynamics", "STPDynamics");
-		return result;
-	}
-
 	/**
 	 * @return Mean-squared error of this origin over 500 randomly selected points
 	 */
