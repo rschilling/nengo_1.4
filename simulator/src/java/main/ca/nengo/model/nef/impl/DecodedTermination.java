@@ -24,9 +24,8 @@ a recipient may use your version of this file under either the MPL or the GPL Li
 
 package ca.nengo.model.nef.impl;
 
+import android.util.Log;
 import java.util.Properties;
-
-import org.apache.log4j.Logger;
 
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.dynamics.LinearSystem;
@@ -68,8 +67,6 @@ import ca.nengo.util.impl.TimeSeriesImpl;
 public class DecodedTermination implements Termination, Resettable, Probeable {
 
 	private static final long serialVersionUID = 1L;
-
-	private static Logger ourLogger = Logger.getLogger(DecodedTermination.class);
 
 	/**
 	 * Name of Probeable output state.
@@ -205,7 +202,7 @@ public class DecodedTermination implements Termination, Resettable, Probeable {
 		}
 
 		if (!myValuesSet) {
-			ourLogger.warn("Input values not set on termination " + myName + ".  Assuming input of zero.");
+			Log.w("Transformation", "Input values not set on termination " + myName + ".  Assuming input of zero.");
 			setValues(new RealOutputImpl(new float[getDimensions()], Units.UNK, 0.0f));
 		}
 

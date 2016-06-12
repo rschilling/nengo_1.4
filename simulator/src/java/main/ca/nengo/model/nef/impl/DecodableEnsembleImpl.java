@@ -34,9 +34,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
-
 import Jama.Matrix;
+import android.util.Log;
 import ca.nengo.dynamics.LinearSystem;
 import ca.nengo.dynamics.impl.CanonicalModel;
 import ca.nengo.dynamics.impl.EulerIntegrator;
@@ -79,8 +78,6 @@ public class DecodableEnsembleImpl extends PlasticEnsembleImpl implements Decoda
 	private ApproximatorFactory myApproximatorFactory;
 	private Map<String, LinearApproximator> myApproximators;
 	private float myTime; //used to support Probeable
-	
-	private static Logger ourLogger = Logger.getLogger(DecodableEnsembleImpl.class);
 
 	/**
 	 * @param name Name of the Ensemble
@@ -496,7 +493,7 @@ public class DecodableEnsembleImpl extends PlasticEnsembleImpl implements Decoda
 
 		if (origin != null) {
 			if (t != null)
-				ourLogger.warn("Warning, probe set on ensemble with matching origin/termination names (\"" + 
+				Log.w("Ensemble", "Warning, probe set on ensemble with matching origin/termination names (\"" + 
 						stateName + "\"), probing origin by default");
 			
 		    origin.setRequiredOnCPU(true);

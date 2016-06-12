@@ -27,8 +27,7 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.model.neuron.impl;
 
-import org.apache.log4j.Logger;
-
+import android.util.Log;
 import ca.nengo.math.PDF;
 import ca.nengo.math.impl.IndicatorPDF;
 import ca.nengo.model.StructuralException;
@@ -47,8 +46,6 @@ public class LIFNeuronFactory implements NodeFactory {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Logger ourLogger = Logger.getLogger(LIFNeuronFactory.class);
-	
 	private float myTauRC;
 	private float myTauRef;
 	private PDF myMaxRate;
@@ -144,7 +141,7 @@ public class LIFNeuronFactory implements NodeFactory {
 			throw new StructuralException("Max firing rate must be > 0");
 		}
 		if (maxRate > 1f / myTauRef) {
-			ourLogger.warn("Decreasing maximum firing rate which was greater than inverse of refractory period");
+			Log.w("NeuronFactory", "Decreasing maximum firing rate which was greater than inverse of refractory period");
 			maxRate = (1f / myTauRef) - .001f;
 		}
 		

@@ -89,7 +89,7 @@ public class TimeSeries1DImpl implements TimeSeries1D, Serializable {
 			result.defineProperty(new SingleValuedPropertyImpl(result, "values", float[].class, valuesGetter));
 
 			final Method labelGetter = this.getClass().getMethod("getLabels", new Class[0]);
-			Method labelSetter = this.getClass().getMethod("setLabel", new Class[]{String.class});
+    			Method labelSetter = this.getClass().getMethod("setLabel", new Class[]{String.class});
 			SingleValuedProperty labelProp = new SingleValuedPropertyImpl(result, "label", String.class, labelGetter, labelSetter) {
 
 				@Override

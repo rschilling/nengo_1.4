@@ -27,8 +27,6 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.model.impl;
 
-import org.apache.log4j.Logger;
-
 import ca.nengo.config.ConfigUtil;
 import ca.nengo.config.Configurable;
 import ca.nengo.config.Configuration;

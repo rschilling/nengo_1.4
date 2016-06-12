@@ -30,6 +30,7 @@ public class SpikingNeuronFactoryTest extends TestCase {
                 new IndicatorPDF(1),
                 new IndicatorPDF(0));
 
-        ConfigUtil.configure((Frame) null, factory);
+        throw new UnsupportedOperationException("this text needs to be updated");
+        // ConfigUtil.configure((Frame) null, factory);
     }
 }

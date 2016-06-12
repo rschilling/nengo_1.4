@@ -29,8 +29,7 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.model.muscle.impl;
 
-import org.apache.log4j.Logger;
-
+import android.util.Log;
 import ca.nengo.config.Configuration;
 import ca.nengo.dynamics.DynamicalSystem;
 import ca.nengo.dynamics.Integrator;
@@ -62,7 +61,6 @@ import ca.nengo.util.impl.TimeSeriesImpl;
  */
 public class HillMuscle extends SkeletalMuscleImpl {
 
-	private static Logger ourLogger = Logger.getLogger(HillMuscle.class);
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -152,7 +150,7 @@ public class HillMuscle extends SkeletalMuscleImpl {
 
 		long startTime = System.currentTimeMillis();
 		TimeSeries output = i.integrate(d, input);
-		ourLogger.info("Elapsed time: " + (System.currentTimeMillis() - startTime));
+		Log.i("HillMuscle", "Elapsed time: " + (System.currentTimeMillis() - startTime));
 
 		Plotter.plot(output, "Force");
 	}
@@ -224,7 +222,7 @@ public class HillMuscle extends SkeletalMuscleImpl {
 			final float vm = Math.min(1.3f, force / (myMaxIsometricForce * a * lm)); //TODO: fix this
 
 
-			ourLogger.info("force: " + force + " lm: " + lm + " vm: " + vm + " a: " + a + " dadt: " + dadt);
+			Log.i("HillMuscle", "force: " + force + " lm: " + lm + " vm: " + vm + " a: " + a + " dadt: " + dadt);
 
 			//find velocity corresponding to this multiplier
 			final Function fv = myCEForceVelocity;

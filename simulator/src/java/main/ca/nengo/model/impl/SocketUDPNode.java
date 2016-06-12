@@ -31,6 +31,7 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.model.impl;
 
+import android.util.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -49,8 +50,6 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-
-import org.apache.log4j.Logger;
 
 import ca.nengo.model.InstantaneousOutput;
 import ca.nengo.model.Node;
@@ -82,8 +81,6 @@ import ca.nengo.util.VisiblyMutable.Listener;
 public class SocketUDPNode implements Node, Resettable {
 
 	//implementation note: this class doesn't nicely extend AbstractNode
-
-	private static Logger ourLogger = Logger.getLogger(SocketUDPNode.class);
 
 	/**
 	 * Default name for a termination
@@ -501,7 +498,8 @@ public class SocketUDPNode implements Node, Resettable {
 	                myOrigin.getValues().getTime();
 	            }
 			} catch (SimulationException e) {
-				ourLogger.warn("Exception getting time from existing output during reset", e);
+				Log.w("PNode", "Exception getting time from existing output during reset");
+                                e.printStackTrace();
 			}
 			myOrigin.setValues(new RealOutputImpl(new float[myOrigin.getDimensions()], Units.UNK, time));
 			myOrigin.reset(randomize);
