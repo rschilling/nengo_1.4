@@ -6,6 +6,6 @@ package ca.nengo;
  */
 public class TODO {
 
-    // TODO: JFreeChart classes should render to Android Views - port JFreeChart to Android.
-
+    // TODO: AFreeChart classes should render to Android Views - port JFreeChart to Android.
+    // TODO: move icons into resources.
 }
