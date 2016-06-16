@@ -28,7 +28,7 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.dynamics.impl;
 
-import org.apache.log4j.Logger;
+import android.util.Log;
 
 import ca.nengo.dynamics.DynamicalSystem;
 import ca.nengo.dynamics.Integrator;
@@ -55,8 +55,6 @@ public class RK45Integrator implements Integrator {
 	
 	private static final long serialVersionUID = 1L;
 
-	private static Logger ourLogger = Logger.getLogger(RK45Integrator.class);
-	
 	//The Dormand-Prince 4(5) coefficients:
 	private static float[][] a = new float[][] {
 		new float[]{0},
@@ -183,7 +181,7 @@ public class RK45Integrator implements Integrator {
 		}
 		
 		if (t < tfinal) {
-			ourLogger.warn("Step size grew too small -- integration aborted.");
+			Log.w("Integrator", "RK45Integrtor: Step size grew too small -- integration aborted.");
 		}
 		
 		Units[] units = new Units[system.getOutputDimension()];

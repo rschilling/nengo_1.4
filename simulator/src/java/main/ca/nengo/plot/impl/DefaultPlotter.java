@@ -30,21 +30,20 @@ package ca.nengo.plot.impl;
 
 import java.util.List;
 
-import org.jfree.chart.ChartColor;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
-import org.jfree.chart.axis.AxisLocation;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.util.ShapeUtilities;
+import org.afree.chart.AFreeChart;
+import org.afree.chart.ChartColor;
+import org.afree.chart.ChartFactory;
+import org.afree.chart.LegendItem;
+import org.afree.chart.LegendItemCollection;
+import org.afree.chart.axis.AxisLocation;
+import org.afree.chart.axis.NumberAxis;
+import org.afree.chart.plot.PlotOrientation;
+import org.afree.chart.plot.XYPlot;
+import org.afree.chart.renderer.xy.XYItemRenderer;
+import org.afree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.afree.data.xy.XYSeries;
+import org.afree.data.xy.XYSeriesCollection;
+import org.afree.util.ShapeUtilities;
 
 import ca.nengo.math.Function;
 import ca.nengo.model.Noise;
@@ -98,7 +97,7 @@ public class DefaultPlotter extends Plotter {
 	public void doPlot(TimeSeries series, String title) {
 		XYSeriesCollection dataset = getDataset(series);
 		
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		AFreeChart chart = ChartFactory.createXYLineChart(
 				title,
 				"Time (s)", 
 				"", 
@@ -117,7 +116,7 @@ public class DefaultPlotter extends Plotter {
 		XYSeriesCollection idealDataset = getDataset(ideal);
 		XYSeriesCollection actualDataset = getDataset(actual);
 		
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		AFreeChart chart = ChartFactory.createXYLineChart(
 				title,
 				"Time (s)", 
 				"", 
@@ -146,7 +145,7 @@ public class DefaultPlotter extends Plotter {
 	 * @see ca.nengo.plot.Plotter#doPlot(java.util.List, java.util.List, java.lang.String)
 	 */
 	public void doPlot(List<TimeSeries> series, List<SpikePattern> patterns, String title) {
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		AFreeChart chart = ChartFactory.createXYLineChart(
 				title,
 				"Time (s)", 
 				"", 
@@ -382,7 +381,7 @@ public class DefaultPlotter extends Plotter {
 		}
 		dataset.addSeries(actualSeries);
 		
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		AFreeChart chart = ChartFactory.createXYLineChart(
 				"Distortion",
 				"X", 
 				"Estimate", 
@@ -484,7 +483,7 @@ public class DefaultPlotter extends Plotter {
 			ensemble.setMode(mode);
 		}
 		
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		AFreeChart chart = ChartFactory.createXYLineChart(
 				"Activities",
 				"X", 
 				"Firing Rate (spikes/s)", 
@@ -502,7 +501,7 @@ public class DefaultPlotter extends Plotter {
 	public void doPlot(SpikePattern pattern) {
 		XYSeriesCollection dataset = getDataset(pattern);
 		
-		JFreeChart chart = ChartFactory.createScatterPlot(
+		AFreeChart chart = ChartFactory.createScatterPlot(
 				"Spike Raster",
 				"Time (s)", 
 				"Neuron #", 
@@ -579,7 +578,7 @@ public class DefaultPlotter extends Plotter {
 			}
 		}
 
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		AFreeChart chart = ChartFactory.createXYLineChart(
 				"Function",
 				"Input", 
 				"Output", 
@@ -605,7 +604,7 @@ public class DefaultPlotter extends Plotter {
 
 		dataset.addSeries(series);
 
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		AFreeChart chart = ChartFactory.createXYLineChart(
 				"Vector",
 				"Index", 
 				"Value", 
@@ -628,7 +627,7 @@ public class DefaultPlotter extends Plotter {
 
 		dataset.addSeries(series);
 
-		JFreeChart chart = ChartFactory.createXYBarChart(
+		AFreeChart chart = ChartFactory.createXYBarChart(
 				title,
 				"Origin Dimension", 
 				false,
@@ -638,7 +637,7 @@ public class DefaultPlotter extends Plotter {
 				false, false, false
 		);
 		
-		chart.getXYPlot().getDomainAxis().setStandardTickUnits(org.jfree.chart.axis.NumberAxis.createIntegerTickUnits());
+		chart.getXYPlot().getDomainAxis().setStandardTickUnits(org.afree.chart.axis.NumberAxis.createIntegerTickUnits());
 
 		return new ChartPanel(chart);			
 	}
@@ -661,7 +660,7 @@ public class DefaultPlotter extends Plotter {
 
 		dataset.addSeries(series);
 
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		AFreeChart chart = ChartFactory.createXYLineChart(
 				"Vector",
 				"Index", 
 				"Value", 
@@ -694,7 +693,7 @@ public class DefaultPlotter extends Plotter {
 			dataset.addSeries(series);
 		}
 
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		AFreeChart chart = ChartFactory.createXYLineChart(
 				"Matrix",
 				"Index", 
 				"Value", 
@@ -707,7 +706,7 @@ public class DefaultPlotter extends Plotter {
 	}
 	
 	//shows a chart in a new window 
-	protected void showChart(JFreeChart chart, String title) {
+	protected void showChart(AFreeChart chart, String title) {
 		// JPanel panel = new ChartPanel(chart);
 		// showPlot(panel, title);
 	}

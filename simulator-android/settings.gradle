@@ -1,1 +1,9 @@
 include ':app', ':nengo-simulator'
+
+include ':aFreeChartLib'
+include ':aFreeGraphics'
+
+project(':aFreeChartLib').projectDir =
+        file('../../../AFreeChart/afreechart/aFreeChartLib/')
+project(':aFreeGraphics').projectDir =
+        file('../../../AFreeChart/afreechart/aFreeGraphics')
