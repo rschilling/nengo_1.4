@@ -45,6 +45,8 @@ import org.afree.data.xy.XYSeries;
 import org.afree.data.xy.XYSeriesCollection;
 import org.afree.util.ShapeUtilities;
 
+import android.graphics.Bitmap;
+
 import ca.nengo.math.Function;
 import ca.nengo.model.Noise;
 import ca.nengo.model.Origin;
@@ -617,7 +619,7 @@ public class DefaultPlotter extends Plotter {
 	}
 	
 	//creates a bar chart for origin MSE plots
-	public ChartPanel getBarChart(float[] vector, String title) {
+	public Bitmap getBarChart(float[] vector, String title) {
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		XYSeries series = new XYSeries("MSE Error Plot");
 
@@ -639,7 +641,10 @@ public class DefaultPlotter extends Plotter {
 		
 		chart.getXYPlot().getDomainAxis().setStandardTickUnits(org.afree.chart.axis.NumberAxis.createIntegerTickUnits());
 
-		return new ChartPanel(chart);			
+		// return new ChartPanel(chart);
+        // TODO generate a bitmap
+        throw new UnsupportedOperationException("TODO: Generate a bitmap");
+		// return null;
 	}
 	
 	

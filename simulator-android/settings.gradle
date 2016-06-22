@@ -2,8 +2,14 @@ include ':app', ':nengo-simulator'
 
 include ':aFreeChartLib'
 include ':aFreeGraphics'
+include ':jmatiolib'
+include ':jgraphtCoreLib'
 
 project(':aFreeChartLib').projectDir =
         file('../../../AFreeChart/afreechart/aFreeChartLib/')
 project(':aFreeGraphics').projectDir =
         file('../../../AFreeChart/afreechart/aFreeGraphics')
+project(':jmatiolib').projectDir =
+        file('../../../JMatIO/jmatiolib')
+project(':jgraphtCoreLib').projectDir =
+        file('../../../jgrapht/JGraphT/jgraphtCoreLib')

@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
+    // compile against SDK 8 so we can use match_parent in layouts.
+    compileSdkVersion 8
     buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "cognition.com.nengo"
-        minSdkVersion 7
-        targetSdkVersion 23
+        minSdkVersion 8
+        targetSdkVersion 8
         versionCode 1
         versionName "1.0"
     }

@@ -9,6 +9,8 @@
           <set>
             <option value="$PROJECT_DIR$/../../../AFreeChart/afreechart/aFreeChartLib" />
             <option value="$PROJECT_DIR$/../../../AFreeChart/afreechart/aFreeGraphics" />
+            <option value="$PROJECT_DIR$/../../../JMatIO/jmatiolib" />
+            <option value="$PROJECT_DIR$/../../../jgrapht/JGraphT/jgraphtCoreLib" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/nengo-simulator" />
@@ -18,6 +20,8 @@
           <set>
             <option value="$PROJECT_DIR$/../../../AFreeChart/afreechart/aFreeChartLib" />
             <option value="$PROJECT_DIR$/../../../AFreeChart/afreechart/aFreeGraphics" />
+            <option value="$PROJECT_DIR$/../../../JMatIO/jmatiolib" />
+            <option value="$PROJECT_DIR$/../../../jgrapht/JGraphT/jgraphtCoreLib" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/nengo-simulator" />
