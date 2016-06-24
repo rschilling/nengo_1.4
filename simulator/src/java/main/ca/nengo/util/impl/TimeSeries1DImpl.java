@@ -30,11 +30,6 @@ package ca.nengo.util.impl;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 
-import ca.nengo.config.ConfigUtil;
-import ca.nengo.config.Configuration;
-import ca.nengo.config.SingleValuedProperty;
-import ca.nengo.config.impl.ConfigurationImpl;
-import ca.nengo.config.impl.SingleValuedPropertyImpl;
 import ca.nengo.model.Units;
 import ca.nengo.util.TimeSeries1D;
 
@@ -67,52 +62,6 @@ public class TimeSeries1DImpl implements TimeSeries1D, Serializable {
 		this.myValues = values;
 		this.myUnits = units;
 		this.myLabel = "1";		
-	}
-	
-	/**
-	 * @return Custom Configuration (to more cleanly handle properties in 1D) 
-	 */
-	public Configuration getConfiguration() {
-		ConfigurationImpl result = ConfigUtil.defaultConfiguration(this);
-		result.removeProperty("units");
-		result.removeProperty("units1D");
-		result.removeProperty("values");
-		result.removeProperty("values1D");
-		result.removeProperty("labels");
-		
-		try {
-			Method unitsGetter = this.getClass().getMethod("getUnits1D", new Class[0]);
-			Method unitsSetter = this.getClass().getMethod("setUnits", new Class[]{Units.class});
-			result.defineProperty(new SingleValuedPropertyImpl(result, "units", Units.class, unitsGetter, unitsSetter));
-			
-			Method valuesGetter = this.getClass().getMethod("getValues1D", new Class[0]);
-			result.defineProperty(new SingleValuedPropertyImpl(result, "values", float[].class, valuesGetter));
-
-			final Method labelGetter = this.getClass().getMethod("getLabels", new Class[0]);
-			Method labelSetter = this.getClass().getMethod("setLabel", new Class[]{String.class});
-			SingleValuedProperty labelProp = new SingleValuedPropertyImpl(result, "label", String.class, labelGetter, labelSetter) {
-
-				@Override
-				public Object getValue() {
-					Object result = null;
-					try {
-						Object configurable = getConfiguration().getConfigurable();
-						String[] labels = (String[]) labelGetter.invoke(configurable, new Object[0]);
-						result = labels[0];
-					} catch (Exception e) {
-						throw new RuntimeException("Can't get label value", e);
-					}
-					return result;
-				}
-				
-			};
-			result.defineProperty(labelProp);
-		} catch (SecurityException e) {
-			throw new RuntimeException("Can't access getter/setter -- this is a bug", e);
-		} catch (NoSuchMethodException e) {
-			throw new RuntimeException("Can't access getter/setter -- this is a bug", e);
-		}
-		return result;
 	}
 	
 	/**

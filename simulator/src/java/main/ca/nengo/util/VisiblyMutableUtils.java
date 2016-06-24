@@ -30,7 +30,6 @@ package ca.nengo.util;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 
 import ca.nengo.model.Node;
 import ca.nengo.model.StructuralException;
@@ -41,8 +40,6 @@ import ca.nengo.model.StructuralException;
  * @author Bryan Tripp
  */
 public class VisiblyMutableUtils {
-	
-	private static Logger ourLogger = Logger.getLogger(VisiblyMutableUtils.class);
 
 	/**
 	 * Notifies listeners of a change to the given VisiblyMutable object.  
@@ -60,7 +57,6 @@ public class VisiblyMutableUtils {
 		try {
 			fire(event, listeners);
 		} catch (StructuralException e) {
-			ourLogger.error(e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -129,7 +125,6 @@ public class VisiblyMutableUtils {
 		try {
 			fire(event, listeners);
 		} catch (StructuralException e) {
-			ourLogger.error(e);
 			throw new RuntimeException(e);
 		}
 	}

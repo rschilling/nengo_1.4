@@ -27,12 +27,6 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.model.nef.impl;
 
-import org.apache.log4j.Logger;
-
-import ca.nengo.config.ConfigUtil;
-import ca.nengo.config.Configurable;
-import ca.nengo.config.Configuration;
-import ca.nengo.config.impl.ConfigurationImpl;
 import ca.nengo.dynamics.DynamicalSystem;
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.dynamics.impl.EulerIntegrator;
@@ -71,11 +65,10 @@ import ca.nengo.util.impl.TimeSeriesImpl;
  *
  * @author Bryan Tripp
  */
-public class DecodedOrigin implements Origin, Resettable, SimulationMode.ModeConfigurable, Noise.Noisy, Configurable, ShortTermPlastic {
+public class DecodedOrigin implements Origin, Resettable, SimulationMode.ModeConfigurable, Noise.Noisy, ShortTermPlastic {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Logger ourLogger = Logger.getLogger(DecodedOrigin.class);
 
 	private Node myNode; //parent node
 	private String myName;
@@ -216,15 +209,6 @@ public class DecodedOrigin implements Origin, Resettable, SimulationMode.ModeCon
 	}
 	
 	/**
-	 * @see ca.nengo.config.Configurable#getConfiguration()
-	 */
-	public Configuration getConfiguration() {
-		ConfigurationImpl result = ConfigUtil.defaultConfiguration(this);
-		//result.renameProperty("sTPDynamics", "STPDynamics");
-		return result;
-	}
-
-	/**
 	 * @return Mean-squared error of this origin over 500 randomly selected points
 	 */
 	public float[] getError() {
@@ -257,7 +241,7 @@ public class DecodedOrigin implements Origin, Resettable, SimulationMode.ModeCon
 				result[i] = MU.prod(error[i], error[i]) / error[i].length;
 			}
 		} else {
-			ourLogger.warn("Can't calculate error of a DecodedOrigin unless it belongs to an NEFEnsemble");
+			throw new RuntimeException("Can't calculate error of a DecodedOrigin unless it belongs to an NEFEnsemble");
 		}
 
 		return result;

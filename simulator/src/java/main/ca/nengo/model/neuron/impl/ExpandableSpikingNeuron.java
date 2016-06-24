@@ -27,7 +27,7 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.model.neuron.impl;
 
-import org.apache.log4j.Logger;
+import android.util.Log;
 
 import ca.nengo.model.ExpandableNode;
 import ca.nengo.model.StructuralException;
@@ -44,8 +44,6 @@ import ca.nengo.model.neuron.SynapticIntegrator;
 public class ExpandableSpikingNeuron extends SpikingNeuron implements ExpandableNode {
 
 	private static final long serialVersionUID = 1L;
-	private static Logger ourLogger = Logger.getLogger(ExpandableSpikingNeuron.class);
-
 	private ExpandableSynapticIntegrator mySynapticIntegrator;
 
 	/**
@@ -64,7 +62,7 @@ public class ExpandableSpikingNeuron extends SpikingNeuron implements Expandable
 		super(integrator, generator, scale, bias, name);
 
 		if ( !(getIntegrator() instanceof ExpandableSynapticIntegrator) ) {
-			ourLogger.warn("Given SynapticIntegrator is not an ExpandableSynapticIntegrator (expansion-related methods will fail");
+			Log.w("Neuron", "Given SynapticIntegrator is not an ExpandableSynapticIntegrator (expansion-related methods will fail");
 		}
 
 		mySynapticIntegrator = (ExpandableSynapticIntegrator) integrator;

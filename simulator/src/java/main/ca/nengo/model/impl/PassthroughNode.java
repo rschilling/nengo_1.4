@@ -31,13 +31,13 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.model.impl;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.log4j.Logger;
 
 import ca.nengo.model.InstantaneousOutput;
 import ca.nengo.model.Node;
@@ -66,8 +66,6 @@ import ca.nengo.util.VisiblyMutableUtils;
 public class PassthroughNode implements Node {
 
 	//implementation note: this class doesn't nicely extend AbstractNode
-
-	private static Logger ourLogger = Logger.getLogger(PassthroughNode.class);
 
 	/**
 	 * Default name for a termination
@@ -219,7 +217,8 @@ public class PassthroughNode implements Node {
                 myOrigin.getValues().getTime();
             }
 		} catch (SimulationException e) {
-			ourLogger.warn("Exception getting time from existing output during reset", e);
+			Log.w("Simulation", "Exception getting time from existing output during reset", e);
+
 		}
 		myOrigin.setValues(new RealOutputImpl(new float[myOrigin.getDimensions()], Units.UNK, time));
 		myOrigin.reset(randomize);

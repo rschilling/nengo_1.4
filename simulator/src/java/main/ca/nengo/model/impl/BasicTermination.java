@@ -30,8 +30,7 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.model.impl;
 
-import org.apache.log4j.Logger;
-
+import android.util.Log;
 import ca.nengo.dynamics.DynamicalSystem;
 import ca.nengo.dynamics.Integrator;
 import ca.nengo.dynamics.impl.CanonicalModel;
@@ -57,8 +56,6 @@ import ca.nengo.util.impl.TimeSeriesImpl;
 public class BasicTermination implements Termination, Resettable {
 
 	private static final long serialVersionUID = 1L;
-
-	private static Logger ourLogger = Logger.getLogger(BasicTermination.class);
 
 	private Node myNode;
 	private DynamicalSystem myDynamics;
@@ -167,7 +164,7 @@ public class BasicTermination implements Termination, Resettable {
 		if (myDynamics instanceof LTISystem) {
 			return CanonicalModel.getDominantTimeConstant((LTISystem) myDynamics);
 		} else {
-			ourLogger.warn("Can't get time constant for non-LTI dynamics. Returning 0.");
+			Log.w("Termination", "Can't get time constant for non-LTI dynamics. Returning 0.");
 			return 0;
 		}
 	}

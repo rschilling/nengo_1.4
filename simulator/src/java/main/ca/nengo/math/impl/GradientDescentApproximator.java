@@ -24,9 +24,9 @@ a recipient may use your version of this file under either the MPL or the GPL Li
 
 package ca.nengo.math.impl;
 
-import java.io.Serializable;
+import android.util.Log;
 
-import org.apache.log4j.Logger;
+import java.io.Serializable;
 
 import ca.nengo.math.ApproximatorFactory;
 import ca.nengo.math.Function;
@@ -42,7 +42,6 @@ import ca.nengo.util.MU;
  */
 public class GradientDescentApproximator implements LinearApproximator {
 
-	private static Logger ourLogger = Logger.getLogger(GradientDescentApproximator.class);
 	private static final long serialVersionUID = 1L;
 
 	private float[][] myEvalPoints;
@@ -161,7 +160,7 @@ public class GradientDescentApproximator implements LinearApproximator {
 			error = findError(targetValues, result);
 			float mse = MU.prod(error, error) / error.length;
 			done = mse < myTolerance;
-			ourLogger.debug("Iteration: " + i + "  MSE: " + mse + " Stuck: " + stuck);
+			Log.d("Approximator", "Iteration: " + i + "  MSE: " + mse + " Stuck: " + stuck);
 		}
 
 		return result;

@@ -27,6 +27,8 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.model.impl;
 
+import android.util.Log;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
@@ -42,7 +44,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
 
 import ca.nengo.model.Ensemble;
 import ca.nengo.model.InstantaneousOutput;
@@ -84,7 +85,6 @@ public class NetworkImpl implements Network, VisiblyMutable, VisiblyMutable.List
 	public static final String DEFAULT_NAME = "Network";
 
 	private static final long serialVersionUID = 1L;
-	private static Logger ourLogger = Logger.getLogger(NetworkImpl.class);
 
 	private Map<String, Node> myNodeMap; //keyed on name
 	private Map<Termination, Projection> myProjectionMap; //keyed on Termination
@@ -1249,19 +1249,19 @@ public class NetworkImpl implements Network, VisiblyMutable, VisiblyMutable.List
 						}
 						result.mySimulator.addProbe(oldProbe.getEnsembleName(), neuronIndex, oldProbe.getStateName(), true);
 					} catch (SimulationException e) {
-						ourLogger.warn("Problem copying Probe", e);
+						Log.w("NetworkImpl", "Problem copying Probe", e);
 					} catch (StructuralException e) {
-						ourLogger.warn("Problem copying Probe", e);
+						Log.w("NetworkImpl", "Problem copying Probe", e);
 					}
 				} else {
 					try {
 						result.mySimulator.addProbe(oldNode.getName(), oldProbe.getStateName(), true);
 					} catch (SimulationException e) {
-						ourLogger.warn("Problem copying Probe", e);
+						Log.w("NetworkImpl", "Problem copying Probe", e);
 					}
 				}
 			} else {
-				ourLogger.warn("Can't copy Probe on type " + target.getClass().getName()
+				Log.w("NetworkImpl", "Can't copy Probe on type " + target.getClass().getName()
 						+ " (to be addressed in a future release)");
 			}
 		}
@@ -1276,7 +1276,7 @@ public class NetworkImpl implements Network, VisiblyMutable, VisiblyMutable.List
 			Method cloneMethod = o.getClass().getMethod("clone", new Class[0]);
 			result = cloneMethod.invoke(o, new Object[0]);
 		} catch (Exception e) {
-			ourLogger.warn("Couldn't clone data of type " + o.getClass().getName(), e);
+            Log.w("NetworkImpl", "Couldn't clone data of type " + o.getClass().getName(), e);
 		}
 
 		return result;

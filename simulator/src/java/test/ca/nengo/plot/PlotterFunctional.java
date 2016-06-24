@@ -126,7 +126,7 @@ public class PlotterFunctional {
 			e.printStackTrace();
 		}
 		
-		Plotter.closeAll();
+		// Plotter.closeAll();
 	}
 	
 	public static void main(String[] args) {

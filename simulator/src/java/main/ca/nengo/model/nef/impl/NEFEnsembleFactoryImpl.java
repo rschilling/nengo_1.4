@@ -27,10 +27,9 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.model.nef.impl;
 
+import android.util.Log;
 import java.io.File;
 import java.io.IOException;
-
-import org.apache.log4j.Logger;
 
 import ca.nengo.io.FileManager;
 import ca.nengo.math.ApproximatorFactory;
@@ -60,8 +59,6 @@ import ca.nengo.util.impl.RandomHypersphereVG;
 public class NEFEnsembleFactoryImpl implements NEFEnsembleFactory, java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	private static Logger ourLogger = Logger.getLogger(NEFEnsembleFactoryImpl.class);
 
 	private ApproximatorFactory myApproximatorFactory;
 	private VectorGenerator myEncoderFactory;
@@ -159,13 +156,13 @@ public class NEFEnsembleFactoryImpl implements NEFEnsembleFactory, java.io.Seria
 
                     result.setName(name);
                     if(result.getNodes().length != n) {
-                        ourLogger.warn("Number of nodes in ensemble loaded from file does not match requested number of nodes");
+                        Log.w("Ensemble", "Number of nodes in ensemble loaded from file does not match requested number of nodes");
                     }
                     if(result.getDimension() != dim) {
-                        ourLogger.warn("Dimension of ensemble loaded from file does not match requested dimension");
+                        Log.w("Ensemble", "Dimension of ensemble loaded from file does not match requested dimension");
                     }
                 } catch (Exception e) {
-                    ourLogger.error("Failed to load file " + ensembleFile.getAbsolutePath() + ". New ensemble will be created.", e);
+                    Log.e("Ensemble", "Failed to load file " + ensembleFile.getAbsolutePath() + ". New ensemble will be created.", e);
                 }
             }
             if (result == null) {
@@ -176,7 +173,7 @@ public class NEFEnsembleFactoryImpl implements NEFEnsembleFactory, java.io.Seria
                     result.setEnsembleFactory(null);
                     fm.save(result, ensembleFile);
                 } catch (IOException e) {
-                    ourLogger.error("Failed to save file " + ensembleFile.getAbsolutePath(), e);
+                    Log.e("Ensemble", "Failed to save file " + ensembleFile.getAbsolutePath(), e);
                 }
             }
 		}
@@ -229,7 +226,7 @@ public class NEFEnsembleFactoryImpl implements NEFEnsembleFactory, java.io.Seria
 			NEFNode[] nodes = new NEFNode[n];
 
 			if(n < 1) {
-                ourLogger.error("Calling doMake with n = " + n);
+                Log.e("Ensemble", "Calling doMake with n = " + n);
             }
 
 			for (int i = 0; i < n; i++) {

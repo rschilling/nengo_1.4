@@ -118,7 +118,7 @@ auxiliary.show.customizer.message=<message>
         <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/2">
             <compilation-unit>
                 <package-root>src/java/main</package-root>
-                <classpath mode="compile">lib/formsrt.jar:lib/Jama-1.0.2.jar:lib/jcommon-1.0.0.jar:lib/jfreechart-1.0.1.jar:lib/jgrapht-jdk1.5-0.7.3.jar:lib/jmatio.jar:lib/junit.jar:lib/log4j-1.2.16.jar:lib/qdox-1.6.3.jar:lib/ssj.jar</classpath>
+                <classpath mode="compile">lib/formsrt.jar:lib/Jama-1.0.2.jar:lib/jcommon-1.0.0.jar:lib/jfreechart-1.0.1.jar:lib/jgrapht-jdk1.5-0.7.3.jar:lib/jmatio.jar:lib/junit.jar:lib/log4j-1.2.16.jar:lib/qdox-1.6.3.jar:lib/ssj.jar:lib/android-8.jar</classpath>
                 <built-to>bin</built-to>
                 <javadoc-built-to>artifacts/javadoc</javadoc-built-to>
                 <source-level>1.5</source-level>

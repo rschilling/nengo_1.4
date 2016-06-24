@@ -204,7 +204,7 @@ public class NengoGraphics extends AppFrame implements NodeContainer {
             Image image = ImageIO.read(resource);
             setIconImage(image);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
 

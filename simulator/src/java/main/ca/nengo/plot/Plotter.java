@@ -27,19 +27,10 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.plot;
 
-import java.awt.BorderLayout;
-import java.awt.Frame;
-import java.awt.Image;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 //import ca.nengo.dynamics.Integrator;
 //import ca.nengo.dynamics.impl.EulerIntegrator;
@@ -59,94 +50,24 @@ import ca.nengo.util.TimeSeries;
  * @author Bryan Tripp
  */
 public abstract class Plotter {
-	
+
 	private static Plotter ourInstance;
-	
-	private List<Frame> myPlotFrames;
-	
+
+	private List<Object> myPlotFrames;
+
 	public Plotter() {
-		myPlotFrames = new ArrayList<Frame>(10);
+		myPlotFrames = new ArrayList<Object>(10);
 	}
-	
+
 	private synchronized static Plotter getInstance() {
 		if (ourInstance == null) {
 			//this can be made configurable if we get more plotters
-			ourInstance = new DefaultPlotter(); 
+			ourInstance = new DefaultPlotter();
 		}
-		
+
 		return ourInstance;
 	}
 
-	/**
-	 * Display a new plot. 
-	 * 
-	 * @param plotPanel A panel containng the plot image
-	 * @param title The plot title 
-	 */
-	public void showPlot(JPanel plotPanel, String title) {
-		final JFrame frame = createFrame();	
-		frame.setTitle(title);
-		frame.getContentPane().add(plotPanel, BorderLayout.CENTER);
-		frame.pack();
-		frame.setVisible(true);
-	}
-	
-	/**
-	 * @return A new JFrame to hold a plot
-	 */
-	public JFrame createFrame(){
-		final JFrame frame = new JFrame();
-		myPlotFrames.add(frame);
-		
-		try {
-			Image image = ImageIO.read(this.getClass().getClassLoader().getResource("ca/nengo/plot/spikepattern-grey.png"));
-			frame.setIconImage(image);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		final Plotter plotter = this;
-        frame.addWindowListener(new WindowAdapter() {
-        	public void windowClosing(WindowEvent e) {
-        		plotter.closeAndDiscard(frame);
-            }
-        });
-        	
-        return frame;
-	}
-	
-	
-	private void closeAndDiscard(Frame plotFrame) {
-		closePlot(plotFrame);
-		myPlotFrames.remove(plotFrame);
-		
-		if (myPlotFrames.size() == 0 && !Environment.inUserInterface()) {
-			System.exit(0); 
-		}
-	}
-
-	//this part is separated from above to allow discarding via iterator in closeAll() 
-	private void closePlot(Frame plotFrame) {
-		if (plotFrame.isVisible()) {
-			plotFrame.setVisible(false);
-		}		
-		plotFrame.dispose();
-	}
-
-	/**
-	 * Close all open plots
-	 */
-	public static void closeAll() {
-		getInstance().doCloseAll();
-	}
-	
-	private void doCloseAll() {
-		Iterator<Frame> it = myPlotFrames.iterator();
-		while (it.hasNext()) {
-			closePlot(it.next());		
-			it.remove();
-		}
-	}
 	
 	/**
 	 * Static convenience method for producing a TimeSeries plot.

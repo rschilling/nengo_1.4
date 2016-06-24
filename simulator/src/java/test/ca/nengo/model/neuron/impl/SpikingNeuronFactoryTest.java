@@ -6,7 +6,6 @@ package ca.nengo.model.neuron.impl;
 import java.awt.Frame;
 
 import junit.framework.TestCase;
-import ca.nengo.config.ConfigUtil;
 import ca.nengo.math.impl.IndicatorPDF;
 
 /**
@@ -30,6 +29,7 @@ public class SpikingNeuronFactoryTest extends TestCase {
                 new IndicatorPDF(1),
                 new IndicatorPDF(0));
 
-        ConfigUtil.configure((Frame) null, factory);
+        throw new UnsupportedOperationException("this text needs to be updated");
+        // ConfigUtil.configure((Frame) null, factory);
     }
 }

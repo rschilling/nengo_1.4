@@ -27,29 +27,25 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.plot.impl;
 
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
+
 import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import org.afree.chart.AFreeChart;
+import org.afree.chart.ChartColor;
+import org.afree.chart.ChartFactory;
+import org.afree.chart.LegendItem;
+import org.afree.chart.LegendItemCollection;
+import org.afree.chart.axis.AxisLocation;
+import org.afree.chart.axis.NumberAxis;
+import org.afree.chart.plot.PlotOrientation;
+import org.afree.chart.plot.XYPlot;
+import org.afree.chart.renderer.xy.XYItemRenderer;
+import org.afree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.afree.data.xy.XYSeries;
+import org.afree.data.xy.XYSeriesCollection;
+import org.afree.util.ShapeUtilities;
 
-import org.jfree.chart.ChartColor;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
-import org.jfree.chart.axis.AxisLocation;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.util.ShapeUtilities;
+import android.graphics.Bitmap;
 
 import ca.nengo.math.Function;
 import ca.nengo.model.Noise;
@@ -76,17 +72,25 @@ import ca.nengo.util.TimeSeries1D;
  * @author Bryan Tripp
  */
 public class DefaultPlotter extends Plotter {
-		
+
+	public static class Color{
+
+		public final int value;
+
+		public Color(int val){
+			this.value = val;
+		}
+	}
 	private static Color[] ourColors = {
-		ChartColor.BLACK, 
-		ChartColor.LIGHT_GRAY, 
-		ChartColor.DARK_BLUE, 
-		ChartColor.BLUE, 
-		ChartColor.LIGHT_CYAN, 
-		ChartColor.LIGHT_GREEN,
-		ChartColor.YELLOW,
-		ChartColor.ORANGE,
-		ChartColor.LIGHT_RED
+		new Color(android.graphics.Color.BLACK),
+		new Color(android.graphics.Color.LTGRAY),
+		new Color(android.graphics.Color.DKGRAY),
+		new Color(android.graphics.Color.BLUE),
+		new Color(android.graphics.Color.CYAN),
+		new Color(android.graphics.Color.GREEN),
+		new Color(android.graphics.Color.YELLOW),
+		new Color(android.graphics.Color.RED),
+		new Color(android.graphics.Color.RED)
 	}; 
 
 	/**
@@ -95,7 +99,7 @@ public class DefaultPlotter extends Plotter {
 	public void doPlot(TimeSeries series, String title) {
 		XYSeriesCollection dataset = getDataset(series);
 		
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		AFreeChart chart = ChartFactory.createXYLineChart(
 				title,
 				"Time (s)", 
 				"", 
@@ -114,7 +118,7 @@ public class DefaultPlotter extends Plotter {
 		XYSeriesCollection idealDataset = getDataset(ideal);
 		XYSeriesCollection actualDataset = getDataset(actual);
 		
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		AFreeChart chart = ChartFactory.createXYLineChart(
 				title,
 				"Time (s)", 
 				"", 
@@ -128,7 +132,7 @@ public class DefaultPlotter extends Plotter {
 
 		XYLineAndShapeRenderer idealRenderer = new XYLineAndShapeRenderer(true, false);
 		idealRenderer.setDrawSeriesLineAsPath(true);
-		idealRenderer.setStroke(new BasicStroke(1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10f, new float[]{10f, 10f}, 0f));
+		// idealRenderer.setStroke(new BasicStroke(1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10f, new float[]{10f, 10f}, 0f));
 		plot.setRenderer(plot.indexOf(idealDataset), idealRenderer);
 
 		XYLineAndShapeRenderer actualRenderer = new XYLineAndShapeRenderer(true, false);
@@ -143,7 +147,7 @@ public class DefaultPlotter extends Plotter {
 	 * @see ca.nengo.plot.Plotter#doPlot(java.util.List, java.util.List, java.lang.String)
 	 */
 	public void doPlot(List<TimeSeries> series, List<SpikePattern> patterns, String title) {
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		AFreeChart chart = ChartFactory.createXYLineChart(
 				title,
 				"Time (s)", 
 				"", 
@@ -162,7 +166,7 @@ public class DefaultPlotter extends Plotter {
 			plot.setDataset(i, getDataset(series.get(i)));			
 			XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, false);
 			renderer.setDrawSeriesLineAsPath(true);
-			renderer.setPaint(getColor(i));
+			// renderer.setPaint(getColor(i));
 			plot.setRenderer(i, renderer);
 						
 			String seriesName = series.get(i).getName();
@@ -177,7 +181,7 @@ public class DefaultPlotter extends Plotter {
 			plot.setDataset(index, getDataset(patterns.get(j)));
 			XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, false);
 			configSpikeRenderer(renderer);
-			renderer.setPaint(getColor(j));
+			// renderer.setPaint(getColor(j));
 			plot.setRenderer(index, renderer);
 			
 			revisedItems.add(getCopy(plot.getLegendItems().get(legendItemIndex), "Spike Pattern " + j));
@@ -189,6 +193,9 @@ public class DefaultPlotter extends Plotter {
 	}
 	
 	private static LegendItem getCopy(LegendItem original, String newLabel) {
+        throw new UnsupportedOperationException("not supported yet.");
+
+        /*
 		return new LegendItem(newLabel,
 				null, //description
 				null, //tooltip text
@@ -205,6 +212,7 @@ public class DefaultPlotter extends Plotter {
 				original.getLineStroke(), 
 				original.getLinePaint()
 		);
+		*/
 	}
 
 	private XYSeriesCollection getDataset(TimeSeries series) {
@@ -308,12 +316,11 @@ public class DefaultPlotter extends Plotter {
 		float [] error=new float[origin.getDimensions()] ;
 		float mseAvg;  //MSE for all of the dimensions of the origin together
 		
-		JPanel panel= new JPanel();
-		JFrame frame=createFrame();
-		frame.setVisible(true);
+
 		long time=System.currentTimeMillis()-21;
 
 
+        /*
 		//plot MSE on continuously updating graph as more samples are used in the calculation
 		for (int i=1;i==1 || frame.isVisible();i++){  //will crash if runtime exceeds 4.1 years
 			//synchronized(ensemble){
@@ -333,7 +340,9 @@ public class DefaultPlotter extends Plotter {
 				frame.pack();
 				frame.setVisible(true);
 			}
+
 		}
+		*/
 	}
 	
 
@@ -374,7 +383,7 @@ public class DefaultPlotter extends Plotter {
 		}
 		dataset.addSeries(actualSeries);
 		
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		AFreeChart chart = ChartFactory.createXYLineChart(
 				"Distortion",
 				"X", 
 				"Estimate", 
@@ -476,7 +485,7 @@ public class DefaultPlotter extends Plotter {
 			ensemble.setMode(mode);
 		}
 		
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		AFreeChart chart = ChartFactory.createXYLineChart(
 				"Activities",
 				"X", 
 				"Firing Rate (spikes/s)", 
@@ -494,7 +503,7 @@ public class DefaultPlotter extends Plotter {
 	public void doPlot(SpikePattern pattern) {
 		XYSeriesCollection dataset = getDataset(pattern);
 		
-		JFreeChart chart = ChartFactory.createScatterPlot(
+		AFreeChart chart = ChartFactory.createScatterPlot(
 				"Spike Raster",
 				"Time (s)", 
 				"Neuron #", 
@@ -525,11 +534,12 @@ public class DefaultPlotter extends Plotter {
 	}
 	
 	private static void configSpikeRenderer(XYLineAndShapeRenderer renderer) {
-		renderer.setShape(ShapeUtilities.createDiamond(1f));
-		renderer.setShapesVisible(true);
-		renderer.setShapesFilled(true);
-		renderer.setLinesVisible(false);
-		renderer.setPaint(Color.BLACK);
+        throw new UnsupportedOperationException("not supported yet");
+		// renderer.setShape(ShapeUtilities.createDiamond(1f));
+		// renderer.setShapesVisible(true);
+		// renderer.setShapesFilled(true);
+		// renderer.setLinesVisible(false);
+		// renderer.setPaint(Color.BLACK);
 	}
 
 	/**
@@ -570,7 +580,7 @@ public class DefaultPlotter extends Plotter {
 			}
 		}
 
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		AFreeChart chart = ChartFactory.createXYLineChart(
 				"Function",
 				"Input", 
 				"Output", 
@@ -596,7 +606,7 @@ public class DefaultPlotter extends Plotter {
 
 		dataset.addSeries(series);
 
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		AFreeChart chart = ChartFactory.createXYLineChart(
 				"Vector",
 				"Index", 
 				"Value", 
@@ -609,7 +619,7 @@ public class DefaultPlotter extends Plotter {
 	}
 	
 	//creates a bar chart for origin MSE plots
-	public ChartPanel getBarChart(float[] vector, String title) {
+	public Bitmap getBarChart(float[] vector, String title) {
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		XYSeries series = new XYSeries("MSE Error Plot");
 
@@ -619,7 +629,7 @@ public class DefaultPlotter extends Plotter {
 
 		dataset.addSeries(series);
 
-		JFreeChart chart = ChartFactory.createXYBarChart(
+		AFreeChart chart = ChartFactory.createXYBarChart(
 				title,
 				"Origin Dimension", 
 				false,
@@ -629,9 +639,12 @@ public class DefaultPlotter extends Plotter {
 				false, false, false
 		);
 		
-		chart.getXYPlot().getDomainAxis().setStandardTickUnits(org.jfree.chart.axis.NumberAxis.createIntegerTickUnits());
+		chart.getXYPlot().getDomainAxis().setStandardTickUnits(org.afree.chart.axis.NumberAxis.createIntegerTickUnits());
 
-		return new ChartPanel(chart);			
+		// return new ChartPanel(chart);
+        // TODO generate a bitmap
+        throw new UnsupportedOperationException("TODO: Generate a bitmap");
+		// return null;
 	}
 	
 	
@@ -652,7 +665,7 @@ public class DefaultPlotter extends Plotter {
 
 		dataset.addSeries(series);
 
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		AFreeChart chart = ChartFactory.createXYLineChart(
 				"Vector",
 				"Index", 
 				"Value", 
@@ -685,7 +698,7 @@ public class DefaultPlotter extends Plotter {
 			dataset.addSeries(series);
 		}
 
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		AFreeChart chart = ChartFactory.createXYLineChart(
 				"Matrix",
 				"Index", 
 				"Value", 
@@ -698,9 +711,9 @@ public class DefaultPlotter extends Plotter {
 	}
 	
 	//shows a chart in a new window 
-	protected void showChart(JFreeChart chart, String title) {
-		JPanel panel = new ChartPanel(chart);
-		showPlot(panel, title);
+	protected void showChart(AFreeChart chart, String title) {
+		// JPanel panel = new ChartPanel(chart);
+		// showPlot(panel, title);
 	}
 
 	/**
