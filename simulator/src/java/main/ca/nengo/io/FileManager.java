@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -102,13 +103,20 @@ public class FileManager {
 	public Object load(File source) throws IOException, ClassNotFoundException {
 		FileInputStream fis = new FileInputStream(source);
 
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		Object return_obj = ois.readObject();
-
-		ois.close();
-		fis.close();
+        Object return_obj = load(fis);
+        fis.close();
 
 		return return_obj;
 	}
+
+	public Object load(InputStream is) throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(is);
+        Object return_obj = ois.readObject();
+
+        ois.close();
+
+        return return_obj;
+
+    }
 
 }
