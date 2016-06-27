@@ -13,6 +13,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <service android:name="cognition.com.nengo.NengoService" />
+
     </application>
+
+
+    <!-- WRITE_EXTERNAL_STORAGE automatically implies READ_EXTERNAL_STORAGE. -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>
