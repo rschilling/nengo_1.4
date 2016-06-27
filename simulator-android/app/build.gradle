@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     // compile against SDK 8 so we can use match_parent in layouts.
-    compileSdkVersion 8
+    compileSdkVersion 9
     buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "cognition.com.nengo"
-        minSdkVersion 8
-        targetSdkVersion 8
+        minSdkVersion 9
+        targetSdkVersion 9
         versionCode 1
         versionName "1.0"
     }
@@ -24,4 +24,5 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+    compile project(path: ':nengo-simulator')
 }
