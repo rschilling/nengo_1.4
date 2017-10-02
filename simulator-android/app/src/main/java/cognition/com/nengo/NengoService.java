@@ -21,6 +21,7 @@ import ca.nengo.math.impl.ConstantFunction;
 import ca.nengo.model.Ensemble;
 import ca.nengo.model.Network;
 import ca.nengo.model.SimulationException;
+import ca.nengo.model.StepListener;
 import ca.nengo.model.StructuralException;
 import ca.nengo.model.Termination;
 import ca.nengo.model.Units;
@@ -33,6 +34,7 @@ import ca.nengo.plot.Plotter;
 import ca.nengo.sim.Simulator;
 import ca.nengo.util.Probe;
 import ca.nengo.util.TimeSeries;
+import ca.nengo.util.VisiblyMutable;
 
 /**
  * Created by Richard Schilling (rschilling@custom-control.com) on 6/25/16.
@@ -148,30 +150,66 @@ public class NengoService extends Service {
 
     private Network createNetwork() throws StructuralException {
 
+
+        // instantiate network
         Network network = new NetworkImpl();
 
+        // add listeners
+        network.addStepListener(new StepListener() {
+            @Override
+            public void stepStarted(float time) {
+                Log.i("Network", "step started: " + time);
+            }
+        });
+        network.addChangeListener(new VisiblyMutable.Listener() {
+            @Override
+            public void changed(VisiblyMutable.Event e) throws StructuralException {
+                Log.i("Network", "changed: " + e.toString());
+            }
+        });
+
+
+        // create a function
         Function f = new ConstantFunction(1, 1f);
+
 //		Function f = new SineFunction();
+
+        // associate the function with a function input and add it to the network.
         FunctionInput input = new FunctionInput("input", new Function[]{f}, Units.UNK);
         network.addNode(input);
 
+        // create an ensemble factory and set it's database for output.
         NEFEnsembleFactoryImpl ef = new NEFEnsembleFactoryImpl();
         ef.setDatabase(getFilesDir());
 
+        // use the ensemble factory to create an ensemble and add it to the network.
         NEFEnsemble integrator = ef.make("integrator", 2, 1, "integrator1", true);
         network.addNode(integrator);
         integrator.collectSpikes(true);
+        integrator.addChangeListener(new VisiblyMutable.Listener() {
+            @Override
+            public void changed(VisiblyMutable.Event e) throws StructuralException {
+                Log.i("integrator", "changed: " + e.toString());
+            }
+        });
 
+        // tell a plotter to plot the integrator and its origin.
         Plotter.plot(integrator);
         Plotter.plot(integrator, NEFEnsemble.X);
 
         float tau = .05f;
 
+        // create a termination for input into integrator.
         Termination interm = integrator.addDecodedTermination("input", new float[][]{new float[]{tau}}, tau, false);
 //		Termination interm = integrator.addDecodedTermination("input", new float[][]{new float[]{1f}}, tau);
+
+        // add a projection between the FunctionInput created above and the terminator/integrator.
         network.addProjection(input.getOrigin(FunctionInput.ORIGIN_NAME), interm);
 
+        // add a termination for input into the integrator called feedback.
         Termination fbterm = integrator.addDecodedTermination("feedback", new float[][]{new float[]{1f}}, tau, false);
+
+        // add a projection between integrator and feedback terminator.
         network.addProjection(integrator.getOrigin(NEFEnsemble.X), fbterm);
 
         //System.out.println("Network creation: " + (System.currentTimeMillis() - start));

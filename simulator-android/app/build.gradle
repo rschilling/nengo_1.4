@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     // compile against SDK 8 so we can use match_parent in layouts.
     compileSdkVersion 9
-    buildToolsVersion "23.0.3"
+    buildToolsVersion "25.0.1"
 
     defaultConfig {
         applicationId "cognition.com.nengo"
