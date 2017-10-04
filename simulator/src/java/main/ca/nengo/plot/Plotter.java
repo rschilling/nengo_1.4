@@ -27,6 +27,8 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.plot;
 
+import android.content.Context;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,8 +77,8 @@ public abstract class Plotter {
 	 * @param series TimeSeries to plot
 	 * @param title Plot title
 	 */
-	public static void plot(TimeSeries series, String title) {
-		getInstance().doPlot(series, title);
+	public static void plot(Context ctx, TimeSeries series, String title) {
+		getInstance().doPlot(ctx, series, title);
 	}
 	
 	/**
@@ -88,9 +90,9 @@ public abstract class Plotter {
 	 * @param tauFilter Time constant of display filter (s) 
 	 * @param title Plot title
 	 */
-	public static void plot(TimeSeries series, float tauFilter, String title) {
-		series = filter(series, tauFilter);
-		getInstance().doPlot(series, title);
+	public static void plot(Context ctx, TimeSeries series, float tauFilter, String title) {
+		series = filter(ctx, series, tauFilter);
+		getInstance().doPlot(ctx, series, title);
 	}
 	
 	/**
@@ -98,7 +100,7 @@ public abstract class Plotter {
 	 * @param tauFilter Filter time constant
 	 * @return Filtered TimeSeries
 	 */
-	public static TimeSeries filter(TimeSeries series, float tauFilter) {
+	public static TimeSeries filter(Context ctx, TimeSeries series, float tauFilter) {
 		return DataUtils.filter(series, tauFilter);
 	}
 
@@ -109,8 +111,8 @@ public abstract class Plotter {
 	 * @param actual Actual time series
 	 * @param title Plot title
 	 */
-	public static void plot(TimeSeries ideal, TimeSeries actual, String title) {
-		getInstance().doPlot(ideal, actual, title);
+	public static void plot(Context ctx, TimeSeries ideal, TimeSeries actual, String title) {
+		getInstance().doPlot(ctx, ideal, actual, title);
 	}
 	
 	/**
@@ -120,8 +122,8 @@ public abstract class Plotter {
 	 * @param patterns A list of SpikePatterns to plot (can be null if none)
 	 * @param title Plot title
 	 */
-	public static void plot(List<TimeSeries> series, List<SpikePattern> patterns, String title) {
-		getInstance().doPlot(series, patterns, title);
+	public static void plot(Context ctx, List<TimeSeries> series, List<SpikePattern> patterns, String title) {
+		getInstance().doPlot(ctx, series, patterns, title);
 	}
 
 	/**
@@ -132,31 +134,31 @@ public abstract class Plotter {
 	 * @param tauFilter Time constant of display filter (s) 
 	 * @param title Plot title
 	 */
-	public static void plot(TimeSeries ideal, TimeSeries actual, float tauFilter, String title) {
+	public static void plot(Context ctx, TimeSeries ideal, TimeSeries actual, float tauFilter, String title) {
 		//ideal = filter(ideal, tauFilter);
-		final TimeSeries filtActual = filter(actual, tauFilter);
-		getInstance().doPlot(ideal, filtActual, title);
+		final TimeSeries filtActual = filter(ctx, actual, tauFilter);
+		getInstance().doPlot(ctx, ideal, filtActual, title);
 	}
 
 	/**
 	 * @param series TimeSeries to plot
 	 * @param title Plot title
 	 */
-	public abstract void doPlot(TimeSeries series, String title);
+	public abstract void doPlot(Context ctx, TimeSeries series, String title);
 	
 	/**
 	 * @param ideal Ideal time series 
 	 * @param actual Actual time series 
 	 * @param title Plot title
 	 */
-	public abstract void doPlot(TimeSeries ideal, TimeSeries actual, String title);
+	public abstract void doPlot(Context ctx, TimeSeries ideal, TimeSeries actual, String title);
 	
 	/**
 	 * @param series A list of TimeSeries to plot (can be null if none)  
 	 * @param patterns A list of SpikePatterns to plot (can be null if none)
 	 * @param title Plot title
 	 */
-	public abstract void doPlot(List<TimeSeries> series, List<SpikePattern> patterns, String title);
+	public abstract void doPlot(Context ctx, List<TimeSeries> series, List<SpikePattern> patterns, String title);
 	
 	/**
 	 * Static convenience method for producing a decoding error plot of an NEFEnsemble origin. 
@@ -165,8 +167,8 @@ public abstract class Plotter {
 	 * @param origin Name of origin (must be a DecodedOrigin, not one derived from a combination of 
 	 * 		neuron origins)
 	 */
-	public static void plot(NEFEnsemble ensemble, String origin) {
-		getInstance().doPlot(ensemble, origin);
+	public static void plot(Context ctx, NEFEnsemble ensemble, String origin) {
+		getInstance().doPlot(ctx, ensemble, origin);
 	}
 	
 	/**
@@ -174,7 +176,7 @@ public abstract class Plotter {
 	 * @param origin Name of origin (must be a DecodedOrigin, not one derived from a combination of 
 	 * 		neuron origins)
 	 */
-	public abstract void doPlot(NEFEnsemble ensemble, String origin);
+	public abstract void doPlot(Context ctx, NEFEnsemble ensemble, String origin);
 	
 	/**
 	 * Static convenience method for producing a plot of CONSTANT_RATE responses over range 
@@ -182,28 +184,28 @@ public abstract class Plotter {
 	 *  
 	 * @param ensemble An NEFEnsemble  
 	 */
-	public static void plot(NEFEnsemble ensemble) {
-		getInstance().doPlot(ensemble);
+	public static void plot(Context ctx, NEFEnsemble ensemble) {
+		getInstance().doPlot(ctx, ensemble);
 	}
 	
 	/**
 	 * @param ensemble An NEFEnsemble  
 	 */
-	public abstract void doPlot(NEFEnsemble ensemble);
+	public abstract void doPlot(Context ctx, NEFEnsemble ensemble);
 	
 	/**
 	 * Static convenience method for plotting a spike raster. 
 	 * 
 	 * @param pattern SpikePattern to plot
 	 */
-	public static void plot(SpikePattern pattern) {
-		getInstance().doPlot(pattern);
+	public static void plot(Context ctx, SpikePattern pattern) {
+		getInstance().doPlot(ctx, pattern);
 	}
 	
 	/**
 	 * @param pattern A SpikePattern for which to plot a raster
 	 */
-	public abstract void doPlot(SpikePattern pattern);
+	public abstract void doPlot(Context ctx, SpikePattern pattern);
 
 	/**
 	 * Static convenience method for plotting a Function. 
@@ -214,8 +216,8 @@ public abstract class Plotter {
 	 * @param end Maximum of input range
 	 * @param title Display title of plot
 	 */
-	public static void plot(Function function, float start, float increment, float end, String title) {
-		getInstance().doPlot(function, start, increment, end, title);
+	public static void plot(Context ctx, Function function, float start, float increment, float end, String title) {
+		getInstance().doPlot(ctx, function, start, increment, end, title);
 	}
 	
 	/**
@@ -225,7 +227,7 @@ public abstract class Plotter {
 	 * @param end Maximum of input range
 	 * @param title Display title of plot
 	 */
-	public abstract void doPlot(Function function, float start, float increment, float end, String title);
+	public abstract void doPlot(Context ctx, Function function, float start, float increment, float end, String title);
 	
 	/**
 	 * Static convenience method for plotting a vector. 
@@ -233,15 +235,15 @@ public abstract class Plotter {
 	 * @param vector Vector of points to plot
 	 * @param title Display title of plot
 	 */
-	public static void plot(float[] vector, String title) {
-		getInstance().doPlot(vector, title);
+	public static void plot(Context ctx, float[] vector, String title) {
+		getInstance().doPlot(ctx, vector, title);
 	}
 	
 	/**
 	 * @param vector Vector of points to plot
 	 * @param title Display title of plot
 	 */
-	public abstract void doPlot(float[] vector, String title);
+	public abstract void doPlot(Context ctx, float[] vector, String title);
 	
 	/**
 	 * Static convenience method for plotting a vector. 
@@ -250,8 +252,8 @@ public abstract class Plotter {
 	 * @param vector Vector of range values
 	 * @param title Display title of plot
 	 */
-	public static void plot(float[] domain, float[] vector, String title) {
-		getInstance().doPlot(domain, vector, title);
+	public static void plot(Context ctx, float[] domain, float[] vector, String title) {
+		getInstance().doPlot(ctx, domain, vector, title);
 	}
 	
 	/**
@@ -259,6 +261,6 @@ public abstract class Plotter {
 	 * @param vector Vector of range values
 	 * @param title Display title of plot
 	 */
-	public abstract void doPlot(float[] domain, float[] vector, String title);
+	public abstract void doPlot(Context ctx, float[] domain, float[] vector, String title);
 	
 }

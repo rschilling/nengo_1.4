@@ -151,7 +151,7 @@ public class HillMuscle extends SkeletalMuscleImpl {
 		TimeSeries output = i.integrate(d, input);
 		Log.i("HillMuscle", "Elapsed time: " + (System.currentTimeMillis() - startTime));
 
-		Plotter.plot(output, "Force");
+		Plotter.plot(null, output, "Force");
 	}
 
 	/**

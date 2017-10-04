@@ -45,6 +45,7 @@ import org.afree.data.xy.XYSeries;
 import org.afree.data.xy.XYSeriesCollection;
 import org.afree.util.ShapeUtilities;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 
 import ca.nengo.math.Function;
@@ -96,11 +97,12 @@ public class DefaultPlotter extends Plotter {
 	/**
 	 * @see ca.nengo.plot.Plotter#doPlot(ca.nengo.util.TimeSeries, java.lang.String)
 	 */
-	public void doPlot(TimeSeries series, String title) {
+	public void doPlot(Context ctx, TimeSeries series, String title) {
 		XYSeriesCollection dataset = getDataset(series);
 		
 		AFreeChart chart = ChartFactory.createXYLineChart(
-				title,
+				ctx,
+				null, // title,
 				"Time (s)", 
 				"", 
 				dataset, 
@@ -114,12 +116,13 @@ public class DefaultPlotter extends Plotter {
 	/**
 	 * @see ca.nengo.plot.Plotter#doPlot(ca.nengo.util.TimeSeries, ca.nengo.util.TimeSeries, java.lang.String)
 	 */
-	public void doPlot(TimeSeries ideal, TimeSeries actual, String title) {
+	public void doPlot(Context ctx, TimeSeries ideal, TimeSeries actual, String title) {
 		XYSeriesCollection idealDataset = getDataset(ideal);
 		XYSeriesCollection actualDataset = getDataset(actual);
 		
 		AFreeChart chart = ChartFactory.createXYLineChart(
-				title,
+				ctx,
+				null, // title,
 				"Time (s)", 
 				"", 
 				idealDataset, 
@@ -146,9 +149,10 @@ public class DefaultPlotter extends Plotter {
 	/**
 	 * @see ca.nengo.plot.Plotter#doPlot(java.util.List, java.util.List, java.lang.String)
 	 */
-	public void doPlot(List<TimeSeries> series, List<SpikePattern> patterns, String title) {
+	public void doPlot(Context ctx, List<TimeSeries> series, List<SpikePattern> patterns, String title) {
 		AFreeChart chart = ChartFactory.createXYLineChart(
-				title,
+				ctx,
+				null, // title,
 				"Time (s)", 
 				"", 
 				null, 
@@ -251,7 +255,7 @@ public class DefaultPlotter extends Plotter {
 	/**
 	 * @see ca.nengo.plot.Plotter#doPlot(ca.nengo.model.nef.NEFEnsemble, java.lang.String)
 	 */
-	public void doPlot(NEFEnsemble ensemble, String name) {
+	public void doPlot(Context ctx, NEFEnsemble ensemble, String name) {
 		try {
 			Origin o = ensemble.getOrigin(name);
 			
@@ -300,7 +304,7 @@ public class DefaultPlotter extends Plotter {
 			
 			//one plot per output dimension ... 
 			for (int i = 0; i < idealOutput[0].length; i++) {
-				doPlot(x, idealOutput, actualOutput, i);
+				doPlot(ctx, x, idealOutput, actualOutput, i);
 			}			
 			
 		} catch (StructuralException e) {
@@ -368,7 +372,7 @@ public class DefaultPlotter extends Plotter {
 	}
 	
 	//used by origin plot
-	private void doPlot(float[] x, float[][] ideal, float[][] actual, int dim) {
+	private void doPlot(Context ctx, float[] x, float[][] ideal, float[][] actual, int dim) {
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		
 		XYSeries idealSeries = new XYSeries("Ideal");
@@ -383,8 +387,8 @@ public class DefaultPlotter extends Plotter {
 		}
 		dataset.addSeries(actualSeries);
 		
-		AFreeChart chart = ChartFactory.createXYLineChart(
-				"Distortion",
+		AFreeChart chart = ChartFactory.createXYLineChart(ctx,
+				null, // s"Distortion",
 				"X", 
 				"Estimate", 
 				dataset, 
@@ -417,7 +421,7 @@ public class DefaultPlotter extends Plotter {
 	/**
 	 * @see ca.nengo.plot.Plotter#doPlot(ca.nengo.model.nef.NEFEnsemble)
 	 */
-	public void doPlot(NEFEnsemble ensemble) {
+	public void doPlot(Context ctx, NEFEnsemble ensemble) {
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		
 		synchronized(ensemble){
@@ -485,8 +489,8 @@ public class DefaultPlotter extends Plotter {
 			ensemble.setMode(mode);
 		}
 		
-		AFreeChart chart = ChartFactory.createXYLineChart(
-				"Activities",
+		AFreeChart chart = ChartFactory.createXYLineChart(ctx,
+				null, // "Activities",
 				"X", 
 				"Firing Rate (spikes/s)", 
 				dataset, 
@@ -500,11 +504,11 @@ public class DefaultPlotter extends Plotter {
 	/**
 	 * @see ca.nengo.plot.Plotter#doPlot(ca.nengo.util.SpikePattern)
 	 */
-	public void doPlot(SpikePattern pattern) {
+	public void doPlot(Context ctx, SpikePattern pattern) {
 		XYSeriesCollection dataset = getDataset(pattern);
 		
-		AFreeChart chart = ChartFactory.createScatterPlot(
-				"Spike Raster",
+		AFreeChart chart = ChartFactory.createScatterPlot(ctx,
+				null, // "Spike Raster",
 				"Time (s)", 
 				"Neuron #", 
 				dataset, 
@@ -545,7 +549,7 @@ public class DefaultPlotter extends Plotter {
 	/**
 	 * @see ca.nengo.plot.Plotter#doPlot(ca.nengo.math.Function, float, float, float, String)
 	 */
-	public void doPlot(Function function, float start, float increment, float end, String title) {
+	public void doPlot(Context ctx, Function function, float start, float increment, float end, String title) {
 		if (function.getDimension() > 2) {
 			throw new IllegalArgumentException("Only 1-D and 2-D functions can be plotted with this method");
 		}
@@ -580,8 +584,8 @@ public class DefaultPlotter extends Plotter {
 			}
 		}
 
-		AFreeChart chart = ChartFactory.createXYLineChart(
-				"Function",
+		AFreeChart chart = ChartFactory.createXYLineChart(ctx,
+				null, // "Function",
 				"Input", 
 				"Output", 
 				dataset, 
@@ -596,7 +600,7 @@ public class DefaultPlotter extends Plotter {
 	/**
 	 * @see ca.nengo.plot.Plotter#doPlot(float[], String)
 	 */
-	public void doPlot(float[] vector, String title) {
+	public void doPlot(Context ctx, float[] vector, String title) {
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		XYSeries series = new XYSeries("Vector");
 
@@ -607,7 +611,8 @@ public class DefaultPlotter extends Plotter {
 		dataset.addSeries(series);
 
 		AFreeChart chart = ChartFactory.createXYLineChart(
-				"Vector",
+				ctx,
+				null, // "Vector",
 				"Index", 
 				"Value", 
 				dataset, 
@@ -619,7 +624,7 @@ public class DefaultPlotter extends Plotter {
 	}
 	
 	//creates a bar chart for origin MSE plots
-	public Bitmap getBarChart(float[] vector, String title) {
+	public Bitmap getBarChart(Context ctx, float[] vector, String title) {
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		XYSeries series = new XYSeries("MSE Error Plot");
 
@@ -629,8 +634,8 @@ public class DefaultPlotter extends Plotter {
 
 		dataset.addSeries(series);
 
-		AFreeChart chart = ChartFactory.createXYBarChart(
-				title,
+		AFreeChart chart = ChartFactory.createXYBarChart(ctx,
+				null, // title,
 				"Origin Dimension", 
 				false,
 				"Error", 
@@ -651,7 +656,7 @@ public class DefaultPlotter extends Plotter {
 	/**
 	 * @see ca.nengo.plot.Plotter#doPlot(float[], float[], java.lang.String)
 	 */
-	public void doPlot(float[] domain, float[] vector, String title) {
+	public void doPlot(Context ctx, float[] domain, float[] vector, String title) {
 		if (domain.length < vector.length) {
 			throw new IllegalArgumentException("Not enough domain points (" + domain.length + "given; " + vector.length + "needed)");
 		}
@@ -666,7 +671,8 @@ public class DefaultPlotter extends Plotter {
 		dataset.addSeries(series);
 
 		AFreeChart chart = ChartFactory.createXYLineChart(
-				"Vector",
+				ctx,
+				null, // "Vector",
 				"Index", 
 				"Value", 
 				dataset, 
@@ -681,7 +687,7 @@ public class DefaultPlotter extends Plotter {
 	 * Accepts a matrix as the second argument, and plots each row of the matrix 
 	 * separately as in doPlot(float[], float[], java.lang.String).
 	 */
-	public void doPlot(float[] domain, float[][] matrix, String title) {
+	public void doPlot(Context ctx, float[] domain, float[][] matrix, String title) {
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		for (int row = 0; row < matrix.length; row++) 
 		{
@@ -698,8 +704,8 @@ public class DefaultPlotter extends Plotter {
 			dataset.addSeries(series);
 		}
 
-		AFreeChart chart = ChartFactory.createXYLineChart(
-				"Matrix",
+		AFreeChart chart = ChartFactory.createXYLineChart(ctx,
+				null, // "Matrix",
 				"Index", 
 				"Value", 
 				dataset, 

@@ -44,8 +44,8 @@ public class IntegratorExample {
 		network.addNode(integrator);
 		integrator.collectSpikes(true);
 
-		Plotter.plot(integrator);
-		Plotter.plot(integrator, NEFEnsemble.X);
+		Plotter.plot(null, integrator);
+		Plotter.plot(null, integrator, NEFEnsemble.X);
 		
 		float tau = .05f; 
 		
@@ -78,11 +78,11 @@ public class IntegratorExample {
 			TimeSeries integratorData = integratorRecorder.getData();
 			integratorData.getLabels()[0] = "decoded output";
 			
-			Plotter.plot(inputRecorder.getData(), "Input");
-			Plotter.plot(integratorData, .005f, "Integrator");
-			Plotter.plot(neuronRecorder.getData(), "Neuron #0");
+			Plotter.plot(null, inputRecorder.getData(), "Input");
+			Plotter.plot(null, integratorData, .005f, "Integrator");
+			Plotter.plot(null, neuronRecorder.getData(), "Neuron #0");
 			
-			Plotter.plot(((Ensemble) network.getNode("integrator")).getSpikePattern());
+			Plotter.plot(null, ((Ensemble) network.getNode("integrator")).getSpikePattern());
 			
 			MatlabExporter me = new MatlabExporter();
 			me.add("input", inputRecorder.getData());

@@ -82,7 +82,7 @@ public class MatlabExporter {
 	 * @param tau Time constant of filter to apply to data
 	 */
 	public void add(String name, TimeSeries data, float tau) {
-		TimeSeries filtered = Plotter.filter(data, tau);
+		TimeSeries filtered = Plotter.filter(null, data, tau);
 		add(name+"_time", new float[][]{filtered.getTimes()});
 		add(name+"_data", filtered.getValues());
 	}

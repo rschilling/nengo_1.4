@@ -121,12 +121,14 @@ public class NengoService extends Service {
             TimeSeries integratorData = integratorRecorder.getData();
             integratorData.getLabels()[0] = "decoded output";
 
+            // TODO: Send the data to the UI for plotting.
+            /*
             Log.i("Service", "plot");
-            Plotter.plot(inputRecorder.getData(), "Input");
-            Plotter.plot(integratorData, .005f, "Integrator");
-            Plotter.plot(neuronRecorder.getData(), "Neuron #0");
+            Plotter.plot(null, inputRecorder.getData(), "Input");
+            Plotter.plot(null, integratorData, .005f, "Integrator");
+            Plotter.plot(null, neuronRecorder.getData(), "Neuron #0");
 
-            Plotter.plot(((Ensemble) network.getNode("integrator")).getSpikePattern());
+            Plotter.plot(null, ((Ensemble) network.getNode("integrator")).getSpikePattern());
 
             Log.i("Service", "write to file");
             MatlabExporter me = new MatlabExporter();
@@ -134,12 +136,11 @@ public class NengoService extends Service {
             me.add("integrator", integratorRecorder.getData(), .01f);
             me.add("neuron", neuronRecorder.getData());
             me.write(new File(getFilesDir(), "export.mat"));
+            */
 
         } catch (SimulationException e) {
             e.printStackTrace();
         } catch (StructuralException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         } finally {
             Log.i("Service", "done (stop tracing)");
@@ -194,8 +195,11 @@ public class NengoService extends Service {
         });
 
         // tell a plotter to plot the integrator and its origin.
+        // TODO: tell the UI to generate a plot.
+        /*
         Plotter.plot(integrator);
         Plotter.plot(integrator, NEFEnsemble.X);
+        */
 
         float tau = .05f;
 

@@ -27,6 +27,8 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.io;
 
+import android.content.Context;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -94,8 +96,8 @@ public class DelimitedFileExporter {
 	 * @param tau Time constant with which to filter data
 	 * @throws IOException if there's a problem writing to disk
 	 */
-	public void export(TimeSeries series, File file, float tau) throws IOException {
-		TimeSeries filtered = Plotter.filter(series, tau);
+	public void export(Context ctx, TimeSeries series, File file, float tau) throws IOException {
+		TimeSeries filtered = Plotter.filter(ctx, series, tau);
 
 		float[][] values = MU.transpose(filtered.getValues());
 		float[][] timesAndValues = new float[values.length + 1][];
