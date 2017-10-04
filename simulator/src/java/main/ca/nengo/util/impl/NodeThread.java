@@ -12,6 +12,7 @@ import ca.nengo.model.SimulationException;
 import ca.nengo.model.impl.SocketUDPNode;
 import ca.nengo.util.ThreadTask;
 
+// TODO: Run on a handler.
 /**
  * A thread for running projections, nodes and tasks in. Projections are all runs before nodes, nodes before tasks.
  *

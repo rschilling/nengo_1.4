@@ -164,7 +164,7 @@ public class NengoService extends Service {
         network.addChangeListener(new VisiblyMutable.Listener() {
             @Override
             public void changed(VisiblyMutable.Event e) throws StructuralException {
-                Log.i("Network", "changed: " + e.toString());
+                Log.i("Network", "changed: " + e.getObject().getClass().getSimpleName());
             }
         });
 
@@ -189,7 +189,7 @@ public class NengoService extends Service {
         integrator.addChangeListener(new VisiblyMutable.Listener() {
             @Override
             public void changed(VisiblyMutable.Event e) throws StructuralException {
-                Log.i("integrator", "changed: " + e.toString());
+                Log.i("integrator", "changed: " + e.getObject().getClass().getSimpleName());
             }
         });
 
