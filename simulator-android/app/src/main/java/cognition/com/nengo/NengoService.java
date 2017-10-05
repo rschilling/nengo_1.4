@@ -8,17 +8,8 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StreamCorruptedException;
-
-import ca.nengo.examples.IntegratorExample;
-import ca.nengo.io.FileManager;
-import ca.nengo.io.MatlabExporter;
 import ca.nengo.math.Function;
 import ca.nengo.math.impl.ConstantFunction;
-import ca.nengo.model.Ensemble;
 import ca.nengo.model.Network;
 import ca.nengo.model.SimulationException;
 import ca.nengo.model.StepListener;
@@ -28,9 +19,7 @@ import ca.nengo.model.Units;
 import ca.nengo.model.impl.FunctionInput;
 import ca.nengo.model.impl.NetworkImpl;
 import ca.nengo.model.nef.NEFEnsemble;
-import ca.nengo.model.nef.NEFEnsembleFactory;
 import ca.nengo.model.nef.impl.NEFEnsembleFactoryImpl;
-import ca.nengo.plot.Plotter;
 import ca.nengo.sim.Simulator;
 import ca.nengo.util.Probe;
 import ca.nengo.util.TimeSeries;

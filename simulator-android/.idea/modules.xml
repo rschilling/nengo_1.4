@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../../../AFreeChart/afreechart/aFreeChartLib/aFreeChartLib.iml" filepath="$PROJECT_DIR$/../../../AFreeChart/afreechart/aFreeChartLib/aFreeChartLib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../AFreeChart/afreechart/aFreeGraphics/aFreeGraphics.iml" filepath="$PROJECT_DIR$/../../../AFreeChart/afreechart/aFreeGraphics/aFreeGraphics.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../../jgrapht/JGraphT/jgraphtCoreLib/jgraphtCoreLib.iml" filepath="$PROJECT_DIR$/../../../jgrapht/JGraphT/jgraphtCoreLib/jgraphtCoreLib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../JMatIO/jmatiolib/jmatiolib.iml" filepath="$PROJECT_DIR$/../../../JMatIO/jmatiolib/jmatiolib.iml" />
       <module fileurl="file://$PROJECT_DIR$/nengo-simulator/nengo-simulator.iml" filepath="$PROJECT_DIR$/nengo-simulator/nengo-simulator.iml" />
       <module fileurl="file://$PROJECT_DIR$/simulator-android.iml" filepath="$PROJECT_DIR$/simulator-android.iml" />
     </modules>

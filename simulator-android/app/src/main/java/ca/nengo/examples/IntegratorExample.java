@@ -6,7 +6,6 @@ package ca.nengo.examples;
 import java.io.File;
 import java.io.IOException;
 
-import ca.nengo.io.MatlabExporter;
 import ca.nengo.math.Function;
 import ca.nengo.math.impl.ConstantFunction;
 import ca.nengo.model.Ensemble;
@@ -43,9 +42,6 @@ public class IntegratorExample {
 		NEFEnsemble integrator = ef.make("integrator", 500, 1, "integrator1", true);  
 		network.addNode(integrator);
 		integrator.collectSpikes(true);
-
-		Plotter.plot(null, integrator);
-		Plotter.plot(null, integrator, NEFEnsemble.X);
 		
 		float tau = .05f; 
 		
@@ -77,24 +73,18 @@ public class IntegratorExample {
 		
 			TimeSeries integratorData = integratorRecorder.getData();
 			integratorData.getLabels()[0] = "decoded output";
-			
+
+			/*
 			Plotter.plot(null, inputRecorder.getData(), "Input");
 			Plotter.plot(null, integratorData, .005f, "Integrator");
 			Plotter.plot(null, neuronRecorder.getData(), "Neuron #0");
-			
+
 			Plotter.plot(null, ((Ensemble) network.getNode("integrator")).getSpikePattern());
-			
-			MatlabExporter me = new MatlabExporter();
-			me.add("input", inputRecorder.getData());
-			me.add("integrator", integratorRecorder.getData(), .01f);
-			me.add("neuron", neuronRecorder.getData());
-			me.write(new File("export.mat"));
+			*/
 			
 		} catch (SimulationException e) {
 			e.printStackTrace();
 		} catch (StructuralException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
