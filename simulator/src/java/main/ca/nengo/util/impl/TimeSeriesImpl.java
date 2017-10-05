@@ -27,6 +27,9 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.util.impl;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import ca.nengo.model.Units;
 import ca.nengo.util.TimeSeries;
 
@@ -35,7 +38,7 @@ import ca.nengo.util.TimeSeries;
  * 
  * @author Bryan Tripp
  */
-public class TimeSeriesImpl implements TimeSeries {
+public class TimeSeriesImpl implements TimeSeries, Parcelable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -175,7 +178,58 @@ public class TimeSeriesImpl implements TimeSeries {
 
 		return result;
 	}
-	
-	
-	
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeFloatArray(this.myTimes);
+        dest.writeInt(this.myValues.length);
+        for (int i = 0; i < this.myValues.length; i++){
+            dest.writeFloatArray(this.myValues[i]);
+        }
+
+        dest.writeInt(this.myUnits.length);
+        for (int i = 0; i < this.myUnits.length; i++){
+            dest.writeSerializable(myUnits[i]);
+        }
+
+        dest.writeStringArray(this.myLabels);
+        dest.writeString(this.myName);
+    }
+
+    protected TimeSeriesImpl(Parcel in) {
+        this.myTimes = in.createFloatArray();
+
+        int count = in.readInt();
+        this.myValues = new float[count][];
+        for (int i = 0; i < count; i++){
+            this.myValues[i] = in.createFloatArray();
+        }
+
+        count = in.readInt();
+        this.myUnits = new Units[count];
+        for (int i = 0; i < this.myUnits.length; i++){
+            this.myUnits[i] = (Units)in.readSerializable();
+        }
+
+        this.myLabels = in.createStringArray();
+        this.myName = in.readString();
+    }
+
+    public static final Parcelable.Creator<TimeSeriesImpl> CREATOR = new Parcelable.Creator<TimeSeriesImpl>() {
+        @Override
+        public TimeSeriesImpl createFromParcel(Parcel source) {
+            return new TimeSeriesImpl(source);
+        }
+
+        @Override
+        public TimeSeriesImpl[] newArray(int size) {
+            return new TimeSeriesImpl[size];
+        }
+    };
 }

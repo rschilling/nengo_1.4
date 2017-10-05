@@ -27,6 +27,9 @@ a recipient may use your version of this file under either the MPL or the GPL Li
  */
 package ca.nengo.util.impl;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.lang.reflect.Method;
 
@@ -38,7 +41,7 @@ import ca.nengo.util.TimeSeries1D;
  * 
  * @author Bryan Tripp
  */
-public class TimeSeries1DImpl implements TimeSeries1D, Serializable {
+public class TimeSeries1DImpl implements TimeSeries1D, Serializable, Parcelable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -159,5 +162,39 @@ public class TimeSeries1DImpl implements TimeSeries1D, Serializable {
 	public TimeSeries1D clone() throws CloneNotSupportedException {
 		return (TimeSeries1D) super.clone();
 	}
-	
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeFloatArray(this.myTimes);
+		dest.writeFloatArray(this.myValues);
+		dest.writeInt(this.myUnits == null ? -1 : this.myUnits.ordinal());
+		dest.writeString(this.myLabel);
+		dest.writeString(this.myName);
+	}
+
+	protected TimeSeries1DImpl(Parcel in) {
+		this.myTimes = in.createFloatArray();
+		this.myValues = in.createFloatArray();
+		int tmpMyUnits = in.readInt();
+		this.myUnits = tmpMyUnits == -1 ? null : Units.values()[tmpMyUnits];
+		this.myLabel = in.readString();
+		this.myName = in.readString();
+	}
+
+	public static final Parcelable.Creator<TimeSeries1DImpl> CREATOR = new Parcelable.Creator<TimeSeries1DImpl>() {
+		@Override
+		public TimeSeries1DImpl createFromParcel(Parcel source) {
+			return new TimeSeries1DImpl(source);
+		}
+
+		@Override
+		public TimeSeries1DImpl[] newArray(int size) {
+			return new TimeSeries1DImpl[size];
+		}
+	};
 }
